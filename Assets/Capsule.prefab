@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2487678767160135151}
   - component: {fileID: 8367319071583671327}
   - component: {fileID: 2075674039893283160}
+  - component: {fileID: 3656487745064273799}
+  - component: {fileID: 1162978805832061852}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -121,3 +123,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateAmount: 30
+--- !u!114 &3656487745064273799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399903239019085369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698b99b61be224a4aa70524acda6f725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleAmount: 0.5
+--- !u!114 &1162978805832061852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399903239019085369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3324a323d70d2c49bc35f10b3282a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

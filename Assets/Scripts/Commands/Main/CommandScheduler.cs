@@ -57,4 +57,13 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = new MoveCommand(move);
         ExecuteCommand(command);
     }
+    public static void RunScaleCommand(Scale scale)
+    {
+        if (scale == null)
+        {
+            return;
+        }
+        ICommand command = new ScaleCommand(scale);
+        ExecuteCommand(command);
+    }
 }

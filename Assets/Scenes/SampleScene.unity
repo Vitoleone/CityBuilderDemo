@@ -1329,7 +1329,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1553178894}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: RotateSelectedBuildings
+        m_MethodName: ScaleSelectedBuildings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

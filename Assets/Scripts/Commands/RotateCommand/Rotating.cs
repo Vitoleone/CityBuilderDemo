@@ -14,6 +14,10 @@ public class Rotating : MonoBehaviour
     {
         if(!SelectManager.instance.selectedUnits.Contains(gameObject))
         SelectManager.instance.SelectUnit(gameObject);
+        else
+        {
+            SelectManager.instance.DeSelectUnit(gameObject);
+        }
     }
     public void RotateBuilding()
     {

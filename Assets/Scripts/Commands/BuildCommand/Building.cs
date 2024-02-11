@@ -39,7 +39,7 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, 1, hitInfo.point.z);
+                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y/2, hitInfo.point.z);
             }
         }
         
@@ -54,7 +54,7 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, 1, hitInfo.point.z);
+                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
             }
             
         }
@@ -71,7 +71,7 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
 
             if (Physics.Raycast(ray, out hitInfo) )
             {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, 1, hitInfo.point.z);
+                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
             }
         }
     }

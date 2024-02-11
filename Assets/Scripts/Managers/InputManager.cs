@@ -23,6 +23,15 @@ public class InputManager : MonoBehaviour
                 CommandScheduler.RunRotatingCommand(building.GetComponent<Rotating>());
             }
         }
-        
+    }
+    public void ScaleSelectedBuildings()
+    {
+        if (SelectManager.instance.selectedUnits.Count > 0)
+        {
+            foreach (GameObject building in SelectManager.instance.selectedUnits)
+            {
+                CommandScheduler.RunScaleCommand(building.GetComponent<Scale>());
+            }
+        }
     }
 }
