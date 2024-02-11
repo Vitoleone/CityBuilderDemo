@@ -80,5 +80,9 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
     {
         CommandScheduler.RunBuildingCommand(this);
     }
+    private void OnDisable()
+    {
+        SelectManager.instance.DeSelectUnit(gameObject);
+    }
 
 }

@@ -9,9 +9,29 @@ public class InputManager : MonoBehaviour
     {
         CommandScheduler.UndoCommand();
     }
+    public void UndoAllSelectedCommands()
+    {
+        if (SelectManager.instance.selectedUnits.Count > 0)
+        {
+            foreach (GameObject building in SelectManager.instance.selectedUnits)
+            {
+                CommandScheduler.UndoCommand();
+            }
+        }
+    }
     public void RedoCommands()
     {
         CommandScheduler.RedoCommand();
+    }
+    public void RedoAllSelectedCommands()
+    {
+        if (SelectManager.instance.selectedUnits.Count > 0)
+        {
+            foreach (GameObject building in SelectManager.instance.selectedUnits)
+            {
+                CommandScheduler.RedoCommand();
+            }
+        }
     }
 
     public void RotateSelectedBuildings()
