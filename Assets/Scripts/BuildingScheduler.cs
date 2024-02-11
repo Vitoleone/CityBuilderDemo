@@ -12,7 +12,6 @@ public class BuildingScheduler : MonoBehaviour
         command.Execute();
         _undoCommands.Push(command);
         _redoCommands.Clear();
-        Debug.Log(_undoCommands.Count);
     }
     public static void UndoCommand()
     {
@@ -30,6 +29,25 @@ public class BuildingScheduler : MonoBehaviour
         ICommand command = _redoCommands.Pop();
         _undoCommands.Push(command);
         command.Redo();
+    }
+    public static void RunBuildingCommand(Building buildingToRun)
+    {
+        if (buildingToRun == null)
+        {
+            return;
+        }
+
+        ICommand command = new BuildCommand(buildingToRun);
+        BuildingScheduler.ExecuteCommand(command);
+    }
+    public static void RunRotatingCommand(Rotating rotate)
+    {
+        if (rotate == null)
+        {
+            return;
+        }
+        ICommand command = new RotatingCommand(rotate);
+        BuildingScheduler.ExecuteCommand(command);
     }
 
 }

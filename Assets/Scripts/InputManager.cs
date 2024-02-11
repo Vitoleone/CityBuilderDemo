@@ -3,35 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour, IPointerDownHandler
+public class InputManager : MonoBehaviour
 {
-    [SerializeField]Building building;
-    public void BuildBuilding()
-    {
-        RunBuildingCommand(building);
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        BuildBuilding();
-    }
-
-    public void RunBuildingCommand(Building buildingToRun)
-    {
-        if (building == null)
-        {
-            return;
-        }
-
-        ICommand command = new BuildCommand(buildingToRun);
-        BuildingScheduler.ExecuteCommand(command);
-    }
-    public void UndoBuildingCommand()
+    public void UndoCommands()
     {
         BuildingScheduler.UndoCommand();
     }
-    public void RedoBuildingCommand()
+    public void RedoCommands()
     {
         BuildingScheduler.RedoCommand();
+    }
+
+    public void RotateSelectedBuildings()
+    {
+        if (SelectManager.instance.selectedUnits.Count > 0)
+        {
+            foreach (GameObject building in SelectManager.instance.selectedUnits)
+            {
+                BuildingScheduler.RunRotatingCommand(building.GetComponent<Rotating>());
+            }
+        }
+        
     }
 }

@@ -31,6 +31,7 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        BuildBuilding();
         if(buildedObject != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -74,4 +75,10 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
             }
         }
     }
+
+    public void BuildBuilding()
+    {
+        BuildingScheduler.RunBuildingCommand(this);
+    }
+
 }
