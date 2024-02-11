@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Input;
 using UnityEngine;
 
-public class BuildingScheduler : MonoBehaviour
+public class CommandScheduler : MonoBehaviour
 {
-   private static Stack<ICommand> _undoCommands = new Stack<ICommand>();
-   private static Stack<ICommand> _redoCommands = new Stack<ICommand>();
+    private static Stack<ICommand> _undoCommands = new Stack<ICommand>();
+    private static Stack<ICommand> _redoCommands = new Stack<ICommand>();
     public static void ExecuteCommand(ICommand command)
     {
         command.Execute();
@@ -38,7 +37,7 @@ public class BuildingScheduler : MonoBehaviour
         }
 
         ICommand command = new BuildCommand(buildingToRun);
-        BuildingScheduler.ExecuteCommand(command);
+        ExecuteCommand(command);
     }
     public static void RunRotatingCommand(Rotating rotate)
     {
@@ -47,7 +46,15 @@ public class BuildingScheduler : MonoBehaviour
             return;
         }
         ICommand command = new RotatingCommand(rotate);
-        BuildingScheduler.ExecuteCommand(command);
+        ExecuteCommand(command);
     }
-
+    public static void RunMoveCommand(Moving move)
+    {
+        if (move == null)
+        {
+            return;
+        }
+        ICommand command = new MoveCommand(move);
+        ExecuteCommand(command);
+    }
 }

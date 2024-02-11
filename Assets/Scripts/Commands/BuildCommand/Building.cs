@@ -78,7 +78,7 @@ public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointe
 
     public void BuildBuilding()
     {
-        BuildingScheduler.RunBuildingCommand(this);
+        CommandScheduler.RunBuildingCommand(this);
     }
 
 }

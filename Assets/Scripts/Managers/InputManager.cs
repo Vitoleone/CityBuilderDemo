@@ -7,11 +7,11 @@ public class InputManager : MonoBehaviour
 {
     public void UndoCommands()
     {
-        BuildingScheduler.UndoCommand();
+        CommandScheduler.UndoCommand();
     }
     public void RedoCommands()
     {
-        BuildingScheduler.RedoCommand();
+        CommandScheduler.RedoCommand();
     }
 
     public void RotateSelectedBuildings()
@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
         {
             foreach (GameObject building in SelectManager.instance.selectedUnits)
             {
-                BuildingScheduler.RunRotatingCommand(building.GetComponent<Rotating>());
+                CommandScheduler.RunRotatingCommand(building.GetComponent<Rotating>());
             }
         }
         

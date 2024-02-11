@@ -29,8 +29,6 @@ public class Rotating : MonoBehaviour
             transform.Rotate(new Vector3(0, -rotateAmount, 0));
             redoRotatations.Push(transform.rotation.eulerAngles);
         }
-        
-        
     }
     public void Redo()
     {
