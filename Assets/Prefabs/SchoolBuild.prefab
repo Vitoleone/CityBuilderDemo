@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1197299735573478802}
   - component: {fileID: 5030150716060392729}
   - component: {fileID: 1790915302990663518}
-  - component: {fileID: 654326859219811041}
+  - component: {fileID: -3710546967337554226}
   m_Layer: 5
   m_Name: SchoolBuild
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &654326859219811041
+--- !u!114 &-3710546967337554226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4652835684956962988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d4db1f7bdf0e2e459f9194ab4643870, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ce9f7f3a0987c54697fa2ee4cdfa472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingObject: {fileID: 1295220564887911823, guid: 8bf27f8a5975e1f4e9160e979cfcb02b, type: 3}

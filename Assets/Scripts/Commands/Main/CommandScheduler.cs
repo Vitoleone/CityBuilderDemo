@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CommandScheduler : MonoBehaviour
 {
-    private static Stack<ICommand> _undoCommands = new Stack<ICommand>();
-    private static Stack<ICommand> _redoCommands = new Stack<ICommand>();
+    public static Stack<ICommand> _undoCommands = new Stack<ICommand>();
+    public static Stack<ICommand> _redoCommands = new Stack<ICommand>();
     public static void ExecuteCommand(ICommand command)
     {
         command.Execute();
         _undoCommands.Push(command);
         _redoCommands.Clear();
+        UIManager.instance.checkButtonsActiveness?.Invoke();
     }
     public static void UndoCommand()
     {
@@ -19,6 +20,7 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = _undoCommands.Pop();
         _redoCommands.Push(command);
         command.Undo();
+        UIManager.instance.checkButtonsActiveness?.Invoke();
     }
 
     public static void RedoCommand()
@@ -28,8 +30,9 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = _redoCommands.Pop();
         _undoCommands.Push(command);
         command.Redo();
+        UIManager.instance.checkButtonsActiveness?.Invoke();
     }
-    public static void RunBuildingCommand(Building buildingToRun)
+    public static void RunBuildingCommand(Build buildingToRun)
     {
         if (buildingToRun == null)
         {

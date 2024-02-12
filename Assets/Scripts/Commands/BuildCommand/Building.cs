@@ -4,85 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Building : MonoBehaviour,IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Building : MonoBehaviour
 {
-    [SerializeField] GameObject buildingObject;
-    static Stack<GameObject> buildings = new Stack<GameObject>();
-    static Stack<GameObject> undoBuildings = new Stack<GameObject>();
-    GameObject buildedObject;
-    bool canMove = false;
-
-    public void Build()
+    private void Start()
     {
-        buildedObject = Instantiate(buildingObject);
-        buildings.Push(buildedObject);
+        SelectManager.instance.allUnits.Add(gameObject);
     }
-    public void Undo()
+    private void OnMouseDown()
     {
-        GameObject undoBuilding = buildings.Pop();
-        undoBuildings.Push(undoBuilding);
-        undoBuilding.SetActive(false);
-    }
-    public void Redo()
-    {
-        GameObject undoBuilding = undoBuildings.Pop();
-        buildings.Push(undoBuilding);
-        undoBuilding.SetActive(true);
-    }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        BuildBuilding();
-        if(buildedObject != null)
+        if (!SelectManager.instance.selectedUnits.Contains(gameObject))
+            SelectManager.instance.SelectUnit(gameObject);
+        else
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y/2, hitInfo.point.z);
-            }
-        }
-        
-
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (buildedObject != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
-            }
-            
-        }
-        
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        
-        if (buildedObject != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo) )
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
-            }
+            SelectManager.instance.DeSelectUnit(gameObject);
         }
     }
 
-    public void BuildBuilding()
+    private void OnDestroy()
     {
-        CommandScheduler.RunBuildingCommand(this);
+        if (SelectManager.instance.selectedUnits.Contains(gameObject))
+        {
+            SelectManager.instance.DeSelectUnit(gameObject);
+        }
     }
+
     private void OnDisable()
     {
-        SelectManager.instance.DeSelectUnit(gameObject);
+        if (SelectManager.instance.selectedUnits.Contains(gameObject))
+        {
+            SelectManager.instance.DeSelectUnit(gameObject);
+        }
     }
 
 }

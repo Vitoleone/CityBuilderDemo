@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5386855424984931285}
   - component: {fileID: 9038214152448103536}
   - component: {fileID: 6524265241071788218}
-  - component: {fileID: 304470601018521697}
+  - component: {fileID: -8171448467202730896}
   - component: {fileID: -3482883493159938052}
-  - component: {fileID: 5473113274506590532}
+  - component: {fileID: 304470601018521697}
+  - component: {fileID: 1798911667880698640}
   m_Layer: 0
   m_Name: Market
   m_TagString: Untagged
@@ -86,7 +87,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &304470601018521697
+--- !u!114 &-8171448467202730896
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,10 +96,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4722627683411591535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698b99b61be224a4aa70524acda6f725, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d4db1f7bdf0e2e459f9194ab4643870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleAmount: 0.5
 --- !u!114 &-3482883493159938052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,8 +112,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateAmount: 30
---- !u!64 &5473113274506590532
-MeshCollider:
+--- !u!114 &304470601018521697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722627683411591535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698b99b61be224a4aa70524acda6f725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleAmount: 0.5
+--- !u!65 &1798911667880698640
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -130,7 +143,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2104153811603578874, guid: 426427d09eae15a489510a472a49d806, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 36.80795, y: 10.057005, z: 20.074274}
+  m_Center: {x: -4.201512, y: 5.022092, z: 0.9738369}

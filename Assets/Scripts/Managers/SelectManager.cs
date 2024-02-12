@@ -5,6 +5,7 @@ using UnityEngine;
 public class SelectManager : Singleton<SelectManager>
 {
     public List<GameObject> selectedUnits;
+    public List<GameObject> allUnits;
     public delegate void OnSelectUnit(bool activeness);
     public OnSelectUnit onSelectUnit;
     

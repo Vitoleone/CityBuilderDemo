@@ -10,15 +10,6 @@ public class Rotating : MonoBehaviour
     public Stack<Vector3> undoRotatations = new Stack<Vector3>();
     public Stack<Vector3> redoRotatations = new Stack<Vector3>();
     
-    private void OnMouseDown()
-    {
-        if(!SelectManager.instance.selectedUnits.Contains(gameObject))
-        SelectManager.instance.SelectUnit(gameObject);
-        else
-        {
-            SelectManager.instance.DeSelectUnit(gameObject);
-        }
-    }
     public void RotateBuilding()
     {
         undoRotatations.Push(transform.rotation.eulerAngles);
@@ -43,15 +34,4 @@ public class Rotating : MonoBehaviour
             undoRotatations.Push(transform.rotation.eulerAngles);
         }
     }
-
-
-    private void OnDestroy()
-    {
-        if(SelectManager.instance.selectedUnits.Contains(gameObject))
-        {
-            SelectManager.instance.selectedUnits.Remove(gameObject);
-        }
-    }
-
-
 }

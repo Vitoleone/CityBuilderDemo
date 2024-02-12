@@ -38,13 +38,4 @@ public class Scale : MonoBehaviour
             undoScale.Push(transform.localScale);
         }
     }
-    private void OnDestroy()
-    {
-        if (SelectManager.instance.selectedUnits.Contains(gameObject))
-        {
-            SelectManager.instance.selectedUnits.Remove(gameObject);
-        }
-    }
-
-
 }

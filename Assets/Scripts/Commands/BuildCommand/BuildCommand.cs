@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BuildCommand : ICommand
 {
-    Building _building;
-    public BuildCommand(Building building)
+    Build _building;
+    public BuildCommand(Build building)
     {
         _building = building;
     }
     public void Execute()
     {
-        _building.Build();
+        _building.BuildExecute();
     }
 
     public void Undo()

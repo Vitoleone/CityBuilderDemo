@@ -5,32 +5,32 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public void UndoCommands()
-    {
-        CommandScheduler.UndoCommand();
-    }
     public void UndoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0)
+        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler._undoCommands.Count > 0)
         {
             foreach (GameObject building in SelectManager.instance.selectedUnits)
             {
                 CommandScheduler.UndoCommand();
             }
         }
-    }
-    public void RedoCommands()
-    {
-        CommandScheduler.RedoCommand();
+        else if(SelectManager.instance.allUnits.Count > 0)
+        {
+            CommandScheduler.UndoCommand();
+        }
     }
     public void RedoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0)
+        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler._redoCommands.Count > 0)
         {
             foreach (GameObject building in SelectManager.instance.selectedUnits)
             {
                 CommandScheduler.RedoCommand();
             }
+        }
+        else if (SelectManager.instance.allUnits.Count > 0)
+        {
+            CommandScheduler.RedoCommand();
         }
     }
 
