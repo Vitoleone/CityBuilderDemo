@@ -14,10 +14,6 @@ public class InputManager : MonoBehaviour
                 CommandScheduler.UndoCommand();
             }
         }
-        else if(SelectManager.instance.allUnits.Count > 0)
-        {
-            CommandScheduler.UndoCommand();
-        }
     }
     public void RedoAllSelectedCommands()
     {
@@ -31,6 +27,18 @@ public class InputManager : MonoBehaviour
         else if (SelectManager.instance.allUnits.Count > 0)
         {
             CommandScheduler.RedoCommand();
+        }
+    }
+    public void MoveAllSelectedBuildings(bool canMove)
+    {
+        if (SelectManager.instance.selectedUnits.Count > 0)
+        {
+            foreach (GameObject building in SelectManager.instance.selectedUnits)
+            {
+                Moving currentBuilding = building.GetComponent<Moving>();
+                currentBuilding.canMove = canMove;
+                CommandScheduler.RunMoveCommand(building.GetComponent<Moving>());
+            }
         }
     }
 

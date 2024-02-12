@@ -10,7 +10,8 @@ public class SelectManager : Singleton<SelectManager>
     public List<GameObject> allUnits;
     public delegate void OnSelectUnit(bool activeness);
     public OnSelectUnit onSelectUnit;
-    
+    public float xOffset = 0, zOffset = 0;
+
     public void SelectUnit(GameObject unit)
     {
         if (unit != null)
@@ -42,6 +43,7 @@ public class SelectManager : Singleton<SelectManager>
             unit.GetComponent<Building>().selectedCircle.SetActive(false); 
         }
         selectedUnits.Clear();
+        UIManager.instance.checkButtonsActiveness?.Invoke();
     }
 
     private void Update()
@@ -60,7 +62,7 @@ public class SelectManager : Singleton<SelectManager>
                         DeselectAllUnits();
                         CommandScheduler.ResetStacks();
                         UIManager.instance.SetFunctionalButtonsActivness(false);
-                        UIManager.instance.checkButtonsActiveness?.Invoke();
+                        
                     }
                 }
             }
