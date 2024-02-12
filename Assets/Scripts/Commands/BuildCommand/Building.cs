@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] GameObject selectedCircle;
+    [SerializeField]public GameObject selectedCircle;
     private void Start()
     {
         SelectManager.instance.allUnits.Add(gameObject);

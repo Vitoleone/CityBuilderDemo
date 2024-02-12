@@ -6,6 +6,12 @@ public class CommandScheduler : MonoBehaviour
 {
     public static Stack<ICommand> _undoCommands = new Stack<ICommand>();
     public static Stack<ICommand> _redoCommands = new Stack<ICommand>();
+
+    public static void ResetStacks()
+    {
+        _undoCommands.Clear();
+        _redoCommands.Clear();
+    }
     public static void ExecuteCommand(ICommand command)
     {
         command.Execute();

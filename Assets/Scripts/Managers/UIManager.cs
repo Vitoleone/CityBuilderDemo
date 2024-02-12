@@ -14,7 +14,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         //Events
-        SelectManager.instance.onSelectUnit += OpenFunctionalPanel;
+        SelectManager.instance.onSelectUnit += SetFunctionalButtonsActivness;
         checkButtonsActiveness += CheckActiveness;
 
         undoButtonColor = undoButton.GetComponent<Image>().color;
@@ -23,11 +23,11 @@ public class UIManager : Singleton<UIManager>
     }
     private void OnDestroy()
     {
-        SelectManager.instance.onSelectUnit -= OpenFunctionalPanel;
+        SelectManager.instance.onSelectUnit -= SetFunctionalButtonsActivness;
         checkButtonsActiveness -= CheckActiveness;
     }
 
-    public void OpenFunctionalPanel(bool activeness)
+    public void SetFunctionalButtonsActivness(bool activeness)
     {
         functionalPanel.SetActive(activeness);
     }
