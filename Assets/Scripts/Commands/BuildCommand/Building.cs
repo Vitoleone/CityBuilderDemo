@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Building : MonoBehaviour
 {
+    [SerializeField] GameObject selectedCircle;
     private void Start()
     {
         SelectManager.instance.allUnits.Add(gameObject);
@@ -13,10 +14,14 @@ public class Building : MonoBehaviour
     private void OnMouseDown()
     {
         if (!SelectManager.instance.selectedUnits.Contains(gameObject))
+        {
             SelectManager.instance.SelectUnit(gameObject);
+            selectedCircle.SetActive(true);
+        }
         else
         {
             SelectManager.instance.DeSelectUnit(gameObject);
+            selectedCircle.SetActive(false);
         }
     }
 
@@ -25,6 +30,7 @@ public class Building : MonoBehaviour
         if (SelectManager.instance.selectedUnits.Contains(gameObject))
         {
             SelectManager.instance.DeSelectUnit(gameObject);
+            selectedCircle.SetActive(false);
         }
     }
 
@@ -33,6 +39,7 @@ public class Building : MonoBehaviour
         if (SelectManager.instance.selectedUnits.Contains(gameObject))
         {
             SelectManager.instance.DeSelectUnit(gameObject);
+            selectedCircle.SetActive(false);
         }
     }
 
