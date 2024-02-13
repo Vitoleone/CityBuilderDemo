@@ -31,11 +31,12 @@ public class Moving : MonoBehaviour
                     _undoStack.Push(transform.position);
                 }
                 transform.position = new Vector3(hitInfo.point.x + xOffsetValue, transform.localScale.y / 2, hitInfo.point.z);
+                Debug.Log(hitInfo.transform.position);
                 if (Input.GetMouseButtonDown(0))
                 {
                     movementFinished = true;
                     canMove = false;
-                    SelectManager.instance.DeselectAllUnits();
+                    //SelectManager.instance.DeselectAllUnits();
                 }
             }
         }
@@ -52,8 +53,8 @@ public class Moving : MonoBehaviour
     {
         if(_undoStack.Count > 0)
         {
-            transform.position = _undoStack.Pop();
             _redoStack.Push(transform.position);
+            transform.position = _undoStack.Pop();
         }
     }
     public void Redo()
@@ -62,6 +63,8 @@ public class Moving : MonoBehaviour
         {
             _undoStack.Push(transform.position);
             transform.position = _redoStack.Pop();
+            Debug.Log("Redo: " + transform.position);
+            
         }
     }
 

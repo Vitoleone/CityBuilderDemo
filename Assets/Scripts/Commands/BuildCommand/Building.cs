@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Building : MonoBehaviour
 {
     [SerializeField]public GameObject selectedCircle;
+    bool isMoving = false;
     private void Start()
     {
         SelectManager.instance.allUnits.Add(gameObject);
@@ -17,11 +18,6 @@ public class Building : MonoBehaviour
         {
             SelectManager.instance.SelectUnit(gameObject);
             selectedCircle.SetActive(true);
-        }
-        else
-        {
-            SelectManager.instance.DeSelectUnit(gameObject);
-            selectedCircle.SetActive(false);
         }
     }
 

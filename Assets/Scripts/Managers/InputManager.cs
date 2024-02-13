@@ -14,6 +14,10 @@ public class InputManager : MonoBehaviour
                 CommandScheduler.UndoCommand();
             }
         }
+        else if (SelectManager.instance.allUnits.Count > 0)
+        {
+            CommandScheduler.UndoCommand();
+        }
     }
     public void RedoAllSelectedCommands()
     {

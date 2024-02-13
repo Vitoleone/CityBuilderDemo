@@ -11,6 +11,7 @@ public class CommandScheduler : MonoBehaviour
     {
         _undoCommands.Clear();
         _redoCommands.Clear();
+        UIManager.instance.checkButtonsActiveness?.Invoke();
     }
     public static void ExecuteCommand(ICommand command)
     {

@@ -10,7 +10,7 @@ public class SelectManager : Singleton<SelectManager>
     public List<GameObject> allUnits;
     public delegate void OnSelectUnit(bool activeness);
     public OnSelectUnit onSelectUnit;
-    public float xOffset = 0, zOffset = 0;
+    public float xOffset = 0;
 
     public void SelectUnit(GameObject unit)
     {
@@ -22,6 +22,7 @@ public class SelectManager : Singleton<SelectManager>
         {
             onSelectUnit?.Invoke(true);
         }
+        CommandScheduler.ResetStacks();
     }
 
     public void DeSelectUnit(GameObject unit)
@@ -29,12 +30,13 @@ public class SelectManager : Singleton<SelectManager>
         if(unit != null)
         {
             selectedUnits.Remove(unit);
+            xOffset = -1;
         }
         if(selectedUnits.Count <= 0)
         {
             onSelectUnit?.Invoke(false);
         }
-        
+        CommandScheduler.ResetStacks();
     }
     public void DeselectAllUnits()
     {
@@ -44,6 +46,7 @@ public class SelectManager : Singleton<SelectManager>
         }
         selectedUnits.Clear();
         UIManager.instance.checkButtonsActiveness?.Invoke();
+        xOffset = -1;
     }
 
     private void Update()

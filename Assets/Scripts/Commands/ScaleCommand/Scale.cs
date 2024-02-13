@@ -10,7 +10,7 @@ public class Scale : MonoBehaviour
     public Stack<Vector3> redoScale = new Stack<Vector3>();
     public void ScaleBuilding()
     {
-        if(transform.localScale.y < 2.5f || transform.localScale.y > 0.5f)
+        if(transform.localScale.y < 2.5f && transform.localScale.y > 0.5f)
         {
             undoScale.Push(transform.localScale);
             transform.localScale += Vector3.one * scaleAmount;
