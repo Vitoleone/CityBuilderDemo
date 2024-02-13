@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
 {
     public void UndoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler._undoCommands.Count > 0)
+        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
         {
             foreach (GameObject building in SelectManager.instance.selectedUnits)
             {
@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
     }
     public void RedoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler._redoCommands.Count > 0)
+        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
         {
             foreach (GameObject building in SelectManager.instance.selectedUnits)
             {

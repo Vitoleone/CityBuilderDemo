@@ -33,7 +33,8 @@ public class UIManager : Singleton<UIManager>
     }
     public void CheckActiveness()
     {
-        if (CommandScheduler._undoCommands.Count > 0)
+        Debug.Log(CommandScheduler.commands.Count);
+        if (CommandScheduler.commands.Count > 0)
         {
             ActiveButton(undoButton,undoButtonColor);
             
@@ -42,7 +43,7 @@ public class UIManager : Singleton<UIManager>
         {
            DeactiveButton(undoButton, undoButtonColor);
         }
-        if(CommandScheduler._redoCommands.Count > 0)
+        if(CommandScheduler.commands.Count > 0)
         {
             ActiveButton(redoButton,redoButtonColor);
         }

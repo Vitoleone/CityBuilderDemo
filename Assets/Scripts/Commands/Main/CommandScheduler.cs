@@ -4,38 +4,36 @@ using UnityEngine;
 
 public class CommandScheduler : MonoBehaviour
 {
-    public static Stack<ICommand> _undoCommands = new Stack<ICommand>();
-    public static Stack<ICommand> _redoCommands = new Stack<ICommand>();
+    public static Stack<ICommand> commands = new Stack<ICommand>();
 
     public static void ResetStacks()
     {
-        _undoCommands.Clear();
-        _redoCommands.Clear();
+        commands.Clear();
         UIManager.instance.checkButtonsActiveness?.Invoke();
     }
     public static void ExecuteCommand(ICommand command)
     {
+        commands.Push(command);
         command.Execute();
-        _undoCommands.Push(command);
-        _redoCommands.Clear();
         UIManager.instance.checkButtonsActiveness?.Invoke();
     }
     public static void UndoCommand()
     {
-        if (_undoCommands.Count <= 0)
+        if (commands.Count <= 0)
             return;
-        ICommand command = _undoCommands.Pop();
-        _redoCommands.Push(command);
+        ICommand command = commands.Pop();
+        commands.Push(command);
         command.Undo();
         UIManager.instance.checkButtonsActiveness?.Invoke();
+        
     }
 
     public static void RedoCommand()
     {
-        if (_redoCommands.Count <= 0)
+        if (commands.Count <= 0)
             return;
-        ICommand command = _redoCommands.Pop();
-        _undoCommands.Push(command);
+        ICommand command = commands.Pop();
+        commands.Push(command);
         command.Redo();
         UIManager.instance.checkButtonsActiveness?.Invoke();
     }

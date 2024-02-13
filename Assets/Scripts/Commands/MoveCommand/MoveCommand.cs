@@ -5,24 +5,29 @@ using UnityEngine;
 public class MoveCommand : ICommand
 {
     Moving _building;
+    Vector3 startPosition;
+    Vector3 endPosition;
     public MoveCommand(Moving building) 
     {
         _building = building;
+        startPosition = building.transform.position;
     }
     public void Execute()
     {
-        _building.Move();   
+        endPosition = _building.Move();
     }
 
     public void Redo()
     {
-        _building.Redo();
+        _building.transform.position = endPosition;
     }
 
     public void Undo()
     {
-        _building.Undo();
+        endPosition = _building.transform.position;
+        _building.transform.position = startPosition;
     }
 
+    
    
 }

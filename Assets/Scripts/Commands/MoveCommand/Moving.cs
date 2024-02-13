@@ -5,13 +5,9 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
-    Stack<Vector3> _undoStack = new Stack<Vector3>();
-    Stack<Vector3> _redoStack = new Stack<Vector3>();
     public bool canMove, movementFinished;
-    float xOffsetValue = -1;
-
-
-    public void Move()
+    float xOffsetValue = -1;//kalkacak, tüm seçili nesnelerin ortasýndan hareket ettirecez
+    public Vector3 Move()
     {
         if(canMove)
         {
@@ -25,49 +21,26 @@ public class Moving : MonoBehaviour
 
             if (Physics.Raycast(ray, out hitInfo))
             {       
-                
-                if(_undoStack.Count <= 0 )
-                {
-                    _undoStack.Push(transform.position);
-                }
                 transform.position = new Vector3(hitInfo.point.x + xOffsetValue, transform.localScale.y / 2, hitInfo.point.z);
-                Debug.Log(hitInfo.transform.position);
+                
                 if (Input.GetMouseButtonDown(0))
                 {
                     movementFinished = true;
                     canMove = false;
-                    //SelectManager.instance.DeselectAllUnits();
+                    return transform.position;
                 }
             }
         }
         else if(movementFinished)
         {
             canMove = false;
+            return transform.position;
         }
+        return transform.position;
     }
+
     private void Update()
     {
         Move();
     }
-    public void Undo()
-    {
-        if(_undoStack.Count > 0)
-        {
-            _redoStack.Push(transform.position);
-            transform.position = _undoStack.Pop();
-        }
-    }
-    public void Redo()
-    {
-        if (_redoStack.Count > 0)
-        {
-            _undoStack.Push(transform.position);
-            transform.position = _redoStack.Pop();
-            Debug.Log("Redo: " + transform.position);
-            
-        }
-    }
-
-    
-
 }
