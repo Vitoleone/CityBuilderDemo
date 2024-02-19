@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 7625130226012025342}
   - component: {fileID: 3360448792534018490}
   - component: {fileID: 7476873495488625885}
-  - component: {fileID: 8671615029887422912}
-  - component: {fileID: 5717695834255199648}
-  - component: {fileID: 2885328045894091502}
   m_Layer: 0
   m_Name: Police_Station
   m_TagString: Untagged
@@ -123,46 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedCircle: {fileID: 3068299979750280510}
---- !u!114 &8671615029887422912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273424752105082923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54c15254875cc44d8a783ba4c3b8646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotateAmount: 30
---- !u!114 &5717695834255199648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273424752105082923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698b99b61be224a4aa70524acda6f725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleAmount: 0.5
---- !u!114 &2885328045894091502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273424752105082923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3324a323d70d2c49bc35f10b3282a6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canMove: 0
-  movementFinished: 0
 --- !u!1001 &7774085094321332434
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] GameObject parent;
     public void UndoAllSelectedCommands()
     {
         if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
@@ -35,39 +36,30 @@ public class InputManager : MonoBehaviour
     }
     public void MoveAllSelectedBuildings(bool canMove)
     {
-        if (SelectManager.instance.selectedUnits.Count > 0)
-        {
-            foreach (GameObject building in SelectManager.instance.selectedUnits)
-            {
-                Moving currentBuilding = building.GetComponent<Moving>();
-                currentBuilding.canMove = canMove;
-                CommandScheduler.RunMoveCommand(building.GetComponent<Moving>());
-            }
-        }
+        Vector3 midpoint = SelectManager.instance.GetMidpoint();
+        parent.transform.position = midpoint;
+        SelectManager.instance.ChildSelected(parent);
+        Moving parentMoving = parent.GetComponent<Moving>();
+        parentMoving.canMove = canMove;
+        CommandScheduler.RunMoveCommand(parentMoving);
     }
 
     public void RotateSelectedBuildings(float rotateAmount)
     {
-        if (SelectManager.instance.selectedUnits.Count > 0)
-        {
-            foreach (GameObject building in SelectManager.instance.selectedUnits)
-            {
-                Rotating currentBuilding = building.GetComponent<Rotating>();
-                currentBuilding.rotateAmount = rotateAmount;
-                CommandScheduler.RunRotatingCommand(building.GetComponent<Rotating>());
-            }
-        }
+        Vector3 midpoint = SelectManager.instance.GetMidpoint();
+        parent.transform.position = midpoint;
+        SelectManager.instance.ChildSelected(parent);
+        Rotating parentRotating = parent.GetComponent<Rotating>();
+        parentRotating.rotateAmount = rotateAmount;
+        CommandScheduler.RunRotatingCommand(parent.GetComponent<Rotating>());
     }
     public void ScaleSelectedBuildings(float scaleAmount)
     {
-        if (SelectManager.instance.selectedUnits.Count > 0)
-        {
-            foreach (GameObject building in SelectManager.instance.selectedUnits)
-            {
-                Scale currentBuilding = building.GetComponent<Scale>();
-                currentBuilding.scaleAmount = scaleAmount;
-                CommandScheduler.RunScaleCommand(building.GetComponent<Scale>());
-            }
-        }
+        Vector3 midpoint = SelectManager.instance.GetMidpoint();
+        this.parent.transform.position = midpoint;
+        SelectManager.instance.ChildSelected(this.parent);
+        Scale parentScaling = parent.GetComponent<Scale>();
+        parentScaling.scaleAmount = scaleAmount;
+        CommandScheduler.RunScaleCommand(parent.GetComponent<Scale>());
     }
 }
