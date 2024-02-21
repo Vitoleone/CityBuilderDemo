@@ -13,9 +13,12 @@ public class Building : MonoBehaviour
     public bool isSelected;
     public bool isBuilded;
     public bool canBuild;
+    int layerNumber = 6;
+    int layerMask;
     private void Start()
     {
         SelectManager.instance.allUnits.Add(this);
+        layerMask = 1 << layerNumber;
     }
     public void CheckCanBuild()
     {

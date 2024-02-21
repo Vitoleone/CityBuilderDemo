@@ -10,6 +10,13 @@ public class Build : MonoBehaviour, IPointerDownHandler
     static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
     bool buildFinished = false;
+    int layerNumber = 6;
+    int layerMask;
+    private void Start()
+    {
+        layerMask = 1 << layerNumber;
+    }
+
     public void BuildExecute()
     {
         
@@ -44,7 +51,7 @@ public class Build : MonoBehaviour, IPointerDownHandler
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Physics.Raycast(ray, out hitInfo,Mathf.Infinity,layerMask))
             {
                 buildedObject.transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
                 if (Input.GetMouseButtonDown(0) && building.canBuild)

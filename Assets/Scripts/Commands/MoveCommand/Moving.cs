@@ -7,6 +7,13 @@ using UnityEngine;
 public class Moving : MonoBehaviour
 {
     public bool canMove, movementFinished;
+    public int layerNumber = 6;
+    public int layerMask;
+
+    private void Start()
+    {
+        layerMask = 1 << layerNumber;
+    }
     public Vector3 Move()
     {
         if(canMove)
@@ -17,7 +24,7 @@ public class Moving : MonoBehaviour
             RaycastHit hitInfo;
             ControlChildPlacement();
             SelectManager.instance.canMovementFinish = false;
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Physics.Raycast(ray, out hitInfo,Mathf.Infinity,layerMask)) //layer kullan
             {  
                  transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
 

@@ -2142,7 +2142,7 @@ GameObject:
   - component: {fileID: 1259380832}
   - component: {fileID: 1259380831}
   - component: {fileID: 1259380830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Respawn
   m_Icon: {fileID: 0}
