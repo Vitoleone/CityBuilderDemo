@@ -47,7 +47,7 @@ public class Build : MonoBehaviour, IPointerDownHandler
         while (!buildFinished)
         {
             yield return new WaitForSeconds(0.01f);
-            building.CheckCanBuild();
+            //building.CheckCanBuild();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 

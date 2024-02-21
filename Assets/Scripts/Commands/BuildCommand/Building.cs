@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,30 +17,37 @@ public class Building : MonoBehaviour
     public bool canBuild;
     int layerNumber = 6;
     int layerMask;
+    Renderer size;
+    bool boxHit;
+    RaycastHit hitInfo;
     private void Start()
     {
         SelectManager.instance.allUnits.Add(this);
+        size = GetComponent<Renderer>();
         layerMask = 1 << layerNumber;
+    }
+    private void FixedUpdate()
+    {
+        if (!isBuilded)
+        {
+            CheckCanBuild();
+        }
     }
     public void CheckCanBuild()
     {
         placementCircle.gameObject.SetActive(true);
         selectedCircle.gameObject.SetActive(false);
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(transform.position, Vector3.down * 2, out hitInfo))
+        boxHit = Physics.BoxCast(size.bounds.center+ Vector3.up * size.bounds.size.y*4, size.bounds.size/2, Vector3.down, out hitInfo,transform.rotation,size.bounds.size.y*4,layerMask);
+        if (!boxHit)
         {
-            float angle = Vector3.Angle(hitInfo.normal, hitInfo.point);
-            if(angle == 90)
-            {
-                canBuild = true;
-                placementCircle.color = Color.green;
-            }
-            else
-            {
-                canBuild = false;
-                placementCircle.color = Color.red;
-            }
+            canBuild = true;
+            placementCircle.color = Color.green;
+        }
+        else
+        {
+            Debug.Log(hitInfo.distance);
+            canBuild = false;
+            placementCircle.color = Color.red;
         }
     }
     private void OnDestroy()
@@ -49,9 +58,30 @@ public class Building : MonoBehaviour
             selectedCircle.SetActive(false);
         }
     }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
 
+    //    //Check if there has been a hit yet
+    //    if (boxHit)
+    //    {//center + rotation * hit.distance
+    //        //Draw a Ray forward from GameObject toward the hit
+    //        Gizmos.DrawRay(size.bounds.center + Vector3.up * 2f, -transform.up * hitInfo.distance);
+    //        //Draw a cube that extends to where the hit exists
+    //        Gizmos.DrawWireCube((size.bounds.center + Vector3.up * size.bounds.size.y) + Vector3.down * hitInfo.distance, size.bounds.size);
+    //    }
+    //    //If there hasn't been a hit yet, draw the ray at the maximum distance
+    //    else
+    //    {//center + rotation * maxDistance
+    //        //Draw a Ray forward from GameObject toward the maximum distance
+    //        Gizmos.DrawRay(size.bounds.center + Vector3.up * 2f, -transform.up * (size.bounds.size.y));
+    //        //Draw a cube at the maximum distance
+    //        Gizmos.DrawWireCube((size.bounds.center + Vector3.up * size.bounds.size.y) + (Vector3.down * size.bounds.size.y), size.bounds.size);
+    //    }
+    //}
     private void OnDisable()
     {
+        
         if (SelectManager.instance.selectedUnits.Contains(this))
         {
             SelectManager.instance.DeSelectUnit(this);
