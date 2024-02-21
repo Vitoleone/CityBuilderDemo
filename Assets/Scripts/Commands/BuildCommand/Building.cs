@@ -1,42 +1,58 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
     [SerializeField]public GameObject selectedCircle;
-    bool isMoving = false;
+    [SerializeField]public Image placementCircle;
+    public bool isSelected;
+    public bool isBuilded;
+    public bool canBuild;
     private void Start()
     {
-        SelectManager.instance.allUnits.Add(gameObject);
+        SelectManager.instance.allUnits.Add(this);
     }
-    private void OnMouseDown()
+    public void CheckCanBuild()
     {
-        if (!SelectManager.instance.selectedUnits.Contains(gameObject))
+        placementCircle.gameObject.SetActive(true);
+        selectedCircle.gameObject.SetActive(false);
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(transform.position, Vector3.down * 2, out hitInfo))
         {
-            SelectManager.instance.SelectUnit(gameObject);
-            selectedCircle.SetActive(true);
+            float angle = Vector3.Angle(hitInfo.normal, hitInfo.point);
+            if(angle == 90)
+            {
+                canBuild = true;
+                placementCircle.color = Color.green;
+            }
+            else
+            {
+                canBuild = false;
+                placementCircle.color = Color.red;
+            }
         }
     }
-
     private void OnDestroy()
     {
-        if (SelectManager.instance.selectedUnits.Contains(gameObject))
+        if (SelectManager.instance.selectedUnits.Contains(this))
         {
-            SelectManager.instance.DeSelectUnit(gameObject);
+            SelectManager.instance.DeSelectUnit(this);
             selectedCircle.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
-        if (SelectManager.instance.selectedUnits.Contains(gameObject))
+        if (SelectManager.instance.selectedUnits.Contains(this))
         {
-            SelectManager.instance.DeSelectUnit(gameObject);
+            SelectManager.instance.DeSelectUnit(this);
             selectedCircle.SetActive(false);
         }
     }
-
 }

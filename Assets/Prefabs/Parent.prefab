@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 59761241454069684}
   - component: {fileID: -4651625114297927274}
+  - component: {fileID: 8867386995324875150}
+  - component: {fileID: 3151132404553875713}
   m_Layer: 0
   m_Name: Parent
   m_TagString: Untagged
@@ -46,3 +48,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 0
   movementFinished: 0
+--- !u!114 &8867386995324875150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6996559655066902812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698b99b61be224a4aa70524acda6f725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleAmount: 0.5
+--- !u!114 &3151132404553875713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6996559655066902812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54c15254875cc44d8a783ba4c3b8646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateAmount: 15

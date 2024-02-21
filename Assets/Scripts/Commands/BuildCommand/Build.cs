@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Build : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Build : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] GameObject buildingObject;
     static Stack<GameObject> buildings = new Stack<GameObject>();
     static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
-
+    bool buildFinished = false;
     public void BuildExecute()
     {
-        buildedObject = Instantiate(buildingObject);
+        
         buildings.Push(buildedObject);
     }
     public void Undo()
@@ -29,53 +29,37 @@ public class Build : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        BuildBuilding();
-        if (buildedObject != null)
+        buildFinished = false;
+        StartCoroutine(Building());
+    }
+
+    IEnumerator Building()
+    {
+        buildedObject = Instantiate(buildingObject);
+        Building building = buildedObject.GetComponent<Building>();
+        while (!buildFinished)
         {
+            yield return new WaitForSeconds(0.01f);
+            building.CheckCanBuild();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
+                buildedObject.transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
+                if (Input.GetMouseButtonDown(0) && building.canBuild)
+                {
+                    buildFinished = true;
+                    
+                    building.placementCircle.gameObject.SetActive(false);
+                    CommandScheduler.RunBuildingCommand(this);
+                    building.isBuilded = true;
+                    SelectManager.instance.DeSelectUnit(building);
+                    break;
+                }
             }
-        }
-
-
-    }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (buildedObject != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
-            }
-
-        }
-
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-
-        if (buildedObject != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, buildedObject.transform.localScale.y / 2, hitInfo.point.z);
-            }
+            
         }
     }
-
-    public void BuildBuilding()
-    {
-        CommandScheduler.RunBuildingCommand(this);
-    }
+    
 }

@@ -6,36 +6,47 @@ using UnityEngine;
 public class Scale : MonoBehaviour
 {
     public float scaleAmount;
-    public Stack<Vector3> undoScale = new Stack<Vector3>();
-    public Stack<Vector3> redoScale = new Stack<Vector3>();
+    Stack<Vector3> undoList = new Stack<Vector3>();
+    Stack<Vector3> redoList = new Stack<Vector3>();
+
     public void ScaleBuilding()
     {
-        if(transform.localScale.y < 2.5f && transform.localScale.y > 0.5f)
+        if (transform.localScale.y < 2.5f && scaleAmount > 0)
         {
-            undoScale.Push(transform.localScale);
+            
             transform.localScale += Vector3.one * scaleAmount;
-            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z); 
+            undoList.Push(Vector3.one * scaleAmount);
+            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
         }
-        
+        else if((transform.localScale.y >= 2.5f || transform.localScale.y > .5) && scaleAmount < 0)
+        {
+            transform.localScale += Vector3.one * scaleAmount;
+            undoList.Push(Vector3.one * scaleAmount);
+            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
+        }
+
     }
     public void Undo()
     {
-        if (undoScale.Count > 0)
+        if(undoList.Count > 0)
         {
-            undoScale.Pop();
-            transform.localScale -= Vector3.one * scaleAmount;
+            Vector3 undoVector = undoList.Pop();
+            transform.localScale -= undoVector;
+            redoList.Push(undoVector);
             transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
-            redoScale.Push(transform.localScale);
         }
+        
     }
     public void Redo()
     {
-        if (redoScale.Count > 0)
+        if (redoList.Count > 0)
         {
-            redoScale.Pop();
-            transform.localScale += Vector3.one * scaleAmount;
-            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
-            undoScale.Push(transform.localScale);
+            Vector3 redoVector = redoList.Pop();
+            transform.localScale += redoVector;
+            undoList.Push(redoVector);
+            transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
         }
+
     }
+       
 }

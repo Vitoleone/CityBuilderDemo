@@ -6,36 +6,40 @@ using UnityEngine.EventSystems;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] GameObject parent;
+    public int availableObjects = 0;
     public void UndoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
-        {
-            foreach (GameObject building in SelectManager.instance.selectedUnits)
-            {
-                CommandScheduler.UndoCommand();
-            }
-        }
-        else if (SelectManager.instance.allUnits.Count > 0)
-        {
-            CommandScheduler.UndoCommand();
-        }
+        CommandScheduler.UndoCommand();
+        //if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
+        //{
+        //    foreach (GameObject building in SelectManager.instance.selectedUnits)
+        //    {
+        //        CommandScheduler.UndoCommand();
+        //    }
+        //}
+        //else if (SelectManager.instance.allUnits.Count > 0)
+        //{
+        //    CommandScheduler.UndoCommand();
+        //}
     }
     public void RedoAllSelectedCommands()
     {
-        if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
-        {
-            foreach (GameObject building in SelectManager.instance.selectedUnits)
-            {
-                CommandScheduler.RedoCommand();
-            }
-        }
-        else if (SelectManager.instance.allUnits.Count > 0)
-        {
-            CommandScheduler.RedoCommand();
-        }
+        CommandScheduler.RedoCommand();
+        //if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
+        //{
+        //    foreach (GameObject building in SelectManager.instance.selectedUnits)
+        //    {
+        //        CommandScheduler.RedoCommand();
+        //    }
+        //}
+        //else if (SelectManager.instance.allUnits.Count > 0)
+        //{
+        //    CommandScheduler.RedoCommand();
+        //}
     }
     public void MoveAllSelectedBuildings(bool canMove)
     {
+        
         Vector3 midpoint = SelectManager.instance.GetMidpoint();
         parent.transform.position = midpoint;
         SelectManager.instance.ChildSelected(parent);
@@ -46,6 +50,7 @@ public class InputManager : MonoBehaviour
 
     public void RotateSelectedBuildings(float rotateAmount)
     {
+       
         Vector3 midpoint = SelectManager.instance.GetMidpoint();
         parent.transform.position = midpoint;
         SelectManager.instance.ChildSelected(parent);
@@ -55,6 +60,7 @@ public class InputManager : MonoBehaviour
     }
     public void ScaleSelectedBuildings(float scaleAmount)
     {
+        
         Vector3 midpoint = SelectManager.instance.GetMidpoint();
         this.parent.transform.position = midpoint;
         SelectManager.instance.ChildSelected(this.parent);

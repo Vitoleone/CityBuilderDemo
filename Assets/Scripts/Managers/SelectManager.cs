@@ -6,51 +6,62 @@ using UnityEngine.EventSystems;
 
 public class SelectManager : Singleton<SelectManager>
 {
-    public List<GameObject> selectedUnits;
-    public List<GameObject> allUnits;
+    public List<Building> selectedUnits;
+    public List<Building> allUnits;
     public delegate void OnSelectUnit(bool activeness);
     public OnSelectUnit onSelectUnit;
     public float xOffset = 0;
+    public bool canMovementFinish;
     private void Update()
     {
+        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
         if (Input.GetMouseButtonDown(0))
         {
             if (!EventSystem.current.IsPointerOverGameObject())//Casts ray if mouse is not on a UI element
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
-
                 if (Physics.Raycast(ray, out hitInfo))
                 {
-                    if (hitInfo.collider.gameObject.GetComponent<Terrain>())
+                    if(hitInfo.collider.gameObject.TryGetComponent<Building>(out Building building) && building.isBuilded)
+                    {
+                        SelectUnit(building);
+                    }
+                    else if(hitInfo.collider.gameObject.GetComponent<Terrain>() && SelectManager.instance.canMovementFinish)
                     {
                         DeselectAllUnits();
                         CommandScheduler.ResetStacks();
                         UIManager.instance.SetFunctionalButtonsActivness(false);
 
                     }
+
                 }
             }
         }
     }
-    public void SelectUnit(GameObject unit)
+    public void SelectUnit(Building unit)
     {
-        if (unit != null)
+        if (unit != null && !selectedUnits.Contains(unit))
         {
             selectedUnits.Add(unit);
+            unit.GetComponent<Building>().selectedCircle.SetActive(true);
         }
-        if(!UIManager.instance.functionalPanel.activeSelf)
+        if (!UIManager.instance.functionalPanel.activeSelf)
         {
             onSelectUnit?.Invoke(true);
         }
         CommandScheduler.ResetStacks();
     }
 
-    public void DeSelectUnit(GameObject unit)
+    public void DeSelectUnit(Building unit)
     {
-        if(unit != null)
+
+        Debug.Log("Deselect");
+        if (unit != null)
         {
             selectedUnits.Remove(unit);
+            unit.GetComponent<Building>().selectedCircle.SetActive(false);
+            unit.GetComponent<Building>().placementCircle.gameObject.SetActive(false);
         }
         if(selectedUnits.Count <= 0)
         {
@@ -61,9 +72,11 @@ public class SelectManager : Singleton<SelectManager>
     }
     public void DeselectAllUnits()
     {
-        foreach(GameObject unit in selectedUnits)
+        Debug.Log("DeselectAll");
+        foreach (Building unit in selectedUnits)
         {
-            unit.GetComponent<Building>().selectedCircle.SetActive(false); 
+            unit.selectedCircle.SetActive(false);
+            unit.placementCircle.gameObject.SetActive(false);
         }
         SelectManager.instance.ClearChilds();
         selectedUnits.Clear();
@@ -75,7 +88,7 @@ public class SelectManager : Singleton<SelectManager>
     {
         Vector3 midpoint = Vector2.zero;
 
-        foreach(GameObject unit in selectedUnits)
+        foreach(Building unit in selectedUnits)
         {
             if(midpoint != Vector3.zero)
             {
@@ -90,17 +103,26 @@ public class SelectManager : Singleton<SelectManager>
     }
     public void ChildSelected(GameObject parent)
     {
-        foreach(GameObject child in selectedUnits)
+        foreach(Building child in selectedUnits)
         {
             child.transform.SetParent(parent.transform);
         }
     }
     public void ClearChilds()
     {
-        foreach(GameObject child in selectedUnits)
+        foreach(Building child in selectedUnits)
         {
             child.transform.SetParent(null);
         }
+    }
+    public bool AllCanBuild()
+    {
+        foreach(Building building in selectedUnits)
+        {
+            if (!building.canBuild)
+                return false;
+        }
+        return true;
     }
 
 

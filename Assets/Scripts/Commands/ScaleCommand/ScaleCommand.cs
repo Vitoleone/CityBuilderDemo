@@ -5,9 +5,10 @@ using UnityEngine;
 public class ScaleCommand : ICommand
 {
     Scale _scale;
-    public ScaleCommand(Scale rotating)
+    public float scaleAmount;
+    public ScaleCommand(Scale scaling)
     {
-        _scale = rotating;
+        _scale = scaling;
     }
     public void Execute()
     {
