@@ -12,17 +12,14 @@ public class Building : MonoBehaviour
 {
     [SerializeField]public GameObject selectedCircle;
     [SerializeField]public Image placementCircle;
-    public bool isSelected;
     public bool isBuilded;
     public bool canBuild;
     int layerNumber = 6;
     int layerMask;
     Renderer size;
-    bool boxHit;
-    RaycastHit hitInfo;
+    
     private void Start()
     {
-        SelectManager.instance.allUnits.Add(this);
         size = GetComponent<Renderer>();
         layerMask = 1 << layerNumber;
     }
@@ -35,9 +32,11 @@ public class Building : MonoBehaviour
     }
     public void CheckCanBuild()
     {
+        
+        RaycastHit hitInfo;
         placementCircle.gameObject.SetActive(true);
         selectedCircle.gameObject.SetActive(false);
-        boxHit = Physics.BoxCast(size.bounds.center+ Vector3.up * size.bounds.size.y*4, size.bounds.size/2, Vector3.down, out hitInfo,transform.rotation,size.bounds.size.y*4,layerMask);
+        bool boxHit = Physics.BoxCast(size.bounds.center+ Vector3.up * size.bounds.size.y*4, size.bounds.size/2, Vector3.down, out hitInfo,transform.rotation,size.bounds.size.y*4,layerMask);
         if (!boxHit)
         {
             canBuild = true;
@@ -45,7 +44,6 @@ public class Building : MonoBehaviour
         }
         else
         {
-            Debug.Log(hitInfo.distance);
             canBuild = false;
             placementCircle.color = Color.red;
         }

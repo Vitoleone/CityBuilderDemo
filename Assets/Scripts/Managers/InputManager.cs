@@ -5,67 +5,77 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] GameObject parent;
+    [SerializeField] GameObject parentObject;
+    Parent parent;
+
     public int availableObjects = 0;
+    private void Start()
+    {
+        parent = parentObject.GetComponent<Parent>();
+    }
     public void UndoAllSelectedCommands()
     {
         CommandScheduler.UndoCommand();
-        //if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
-        //{
-        //    foreach (GameObject building in SelectManager.instance.selectedUnits)
-        //    {
-        //        CommandScheduler.UndoCommand();
-        //    }
-        //}
-        //else if (SelectManager.instance.allUnits.Count > 0)
-        //{
-        //    CommandScheduler.UndoCommand();
-        //}
     }
     public void RedoAllSelectedCommands()
     {
         CommandScheduler.RedoCommand();
-        //if (SelectManager.instance.selectedUnits.Count > 0 && CommandScheduler.commands.Count > 0)
-        //{
-        //    foreach (GameObject building in SelectManager.instance.selectedUnits)
-        //    {
-        //        CommandScheduler.RedoCommand();
-        //    }
-        //}
-        //else if (SelectManager.instance.allUnits.Count > 0)
-        //{
-        //    CommandScheduler.RedoCommand();
-        //}
     }
     public void MoveAllSelectedBuildings(bool canMove)
     {
-        
-        Vector3 midpoint = SelectManager.instance.GetMidpoint();
-        parent.transform.position = midpoint;
-        SelectManager.instance.ChildSelected(parent);
-        Moving parentMoving = parent.GetComponent<Moving>();
+
+        AssignParentAndMidpoint();
+        Moving parentMoving = parentObject.GetComponent<Moving>();
         parentMoving.canMove = canMove;
         CommandScheduler.RunMoveCommand(parentMoving);
     }
 
     public void RotateSelectedBuildings(float rotateAmount)
     {
-       
-        Vector3 midpoint = SelectManager.instance.GetMidpoint();
-        parent.transform.position = midpoint;
-        SelectManager.instance.ChildSelected(parent);
-        Rotating parentRotating = parent.GetComponent<Rotating>();
+
+        AssignParentAndMidpoint();
+        Rotating parentRotating = parentObject.GetComponent<Rotating>();
         parentRotating.rotateAmount = rotateAmount;
-        CommandScheduler.RunRotatingCommand(parent.GetComponent<Rotating>());
+        CommandScheduler.RunRotatingCommand(parentObject.GetComponent<Rotating>());
     }
     public void ScaleSelectedBuildings(float scaleAmount)
     {
-        
-        Vector3 midpoint = SelectManager.instance.GetMidpoint();
-        this.parent.transform.position = midpoint;
-        SelectManager.instance.ChildSelected(this.parent);
-        Scale parentScaling = parent.GetComponent<Scale>();
+
+        AssignParentAndMidpoint();
+        Scale parentScaling = parentObject.GetComponent<Scale>();
         parentScaling.scaleAmount = scaleAmount;
-        CommandScheduler.RunScaleCommand(parent.GetComponent<Scale>());
+        CommandScheduler.RunScaleCommand(parentObject.GetComponent<Scale>());
+    }
+    private void AssignParentAndMidpoint()
+    {
+        Vector3 midpoint = parent.GetMidpoint();
+        parentObject.transform.position = midpoint;
+        parent.ChildSelectedUnits();
+    }
+
+    public void PlacementAlertButton()
+    {
+        Moving parentMoving = parentObject.GetComponent<Moving>();
+        Scale parentScale = parentObject.GetComponent<Scale>();
+        Build parentBuild = parentObject.GetComponent<Build>();
+        Rotating parentRotate = parentObject.GetComponent<Rotating>();
+        switch(parent.state)
+        {
+            case Parent.ParentState.Building:
+                break;
+            case Parent.ParentState.Scaling:
+                break;
+            case Parent.ParentState.Moving:
+                parentMoving.canMove = true;
+                UIManager.instance.SetFunctionalButtonsActivness(true);
+                break;
+            case Parent.ParentState.Rotating:
+                UIManager.instance.SetFunctionalButtonsActivness(true);
+                parent.state = Parent.ParentState.Rotating;
+                break;
+            default:
+                break;
+        }
+        UIManager.instance.ControlPlacementAlertActiveness(false);
     }
 }

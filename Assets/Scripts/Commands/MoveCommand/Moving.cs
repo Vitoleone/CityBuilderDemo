@@ -2,39 +2,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Moving : MonoBehaviour
 {
-    public bool canMove, movementFinished;
+    public bool canMove, movementFinished = false;
     public int layerNumber = 6;
     public int layerMask;
+    Parent parent;
 
     private void Start()
     {
         layerMask = 1 << layerNumber;
+        parent = GetComponent<Parent>();
     }
     public Vector3 Move()
     {
         if(canMove)
         {
-
+            parent.state = Parent.ParentState.Moving;
             movementFinished = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
-            ControlChildPlacement();
+            parent.ControlChildPlacement();
             SelectManager.instance.canMovementFinish = false;
-            if (Physics.Raycast(ray, out hitInfo,Mathf.Infinity,layerMask)) //layer kullan
-            {  
-                 transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
-
-                if (Input.GetMouseButtonDown(0) && SelectManager.instance.AllCanBuild())
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
                 {
-                    movementFinished = true;
-                    canMove = false;
-                    return transform.position;
+                    transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
+
+                    if (Input.GetMouseButtonDown(0) && SelectManager.instance.AllCanBuild())
+                    {
+                        movementFinished = true;
+                        canMove = false;
+                        parent.state = Parent.ParentState.Free;
+                        return transform.position;
+                    }
+                    else if(Input.GetMouseButtonDown(0) && !SelectManager.instance.AllCanBuild())
+                    {
+                        //hata ekraný popup olacak, canmove false olacak ve buttonlar görünmez hale gelecek.
+                        canMove = false;
+                        UIManager.instance.SetFunctionalButtonsActivness(false);
+                        UIManager.instance.ControlPlacementAlertActiveness(true);
+                        
+                    }
                 }
             }
+            
         }
         else if(movementFinished)
         {
@@ -44,15 +61,6 @@ public class Moving : MonoBehaviour
         }
         
         return transform.position;
-    }
-    public void ControlChildPlacement()
-    {
-        foreach(Building childBuilding in GetComponentsInChildren<Building>())
-        {
-            childBuilding.placementCircle.gameObject.SetActive(true);
-            childBuilding.CheckCanBuild();
-            Debug.Log(childBuilding.gameObject.name + " canPlaced: " + childBuilding.canBuild);
-        }
     }
     private void Update()
     {

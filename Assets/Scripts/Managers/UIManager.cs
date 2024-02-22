@@ -6,9 +6,15 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] public GameObject functionalPanel;
+    [SerializeField] public GameObject rotationLeftButton;
+    [SerializeField] public GameObject rotationRightButton;
+    [SerializeField] public GameObject movementButton;
+    [SerializeField] public GameObject scaleUpButton;
+    [SerializeField] public GameObject scaleDownButton;
     [SerializeField] public Button undoButton;
     [SerializeField] public Button redoButton;
+    [SerializeField] public GameObject placementAlert;
+    public bool allFunctionalActiveness = false;
     public Action checkButtonsActiveness;
     Color undoButtonColor, redoButtonColor;
     private void Start()
@@ -29,30 +35,37 @@ public class UIManager : Singleton<UIManager>
 
     public void SetFunctionalButtonsActivness(bool activeness)
     {
-        functionalPanel.SetActive(activeness);
+        rotationLeftButton.SetActive(activeness);
+        rotationRightButton.SetActive(activeness);
+        movementButton.SetActive(activeness);
+        scaleUpButton.SetActive(activeness);
+        scaleDownButton.SetActive(activeness);
+        allFunctionalActiveness |= activeness;
     }
     public void CheckActiveness()
     {
-        if (CommandScheduler.commands.Count > 0)
+        if (CommandScheduler.commands.Count > 0 && SelectManager.instance.selectedUnits.Count > 0)
         {
             ActiveButton(undoButton,undoButtonColor);
-            
+            ActiveButton(redoButton, redoButtonColor);
+
         }
-        else
+        else if(CommandScheduler.commands.Count <= 0 && SelectManager.instance.selectedUnits.Count < 0)
         {
            DeactiveButton(undoButton, undoButtonColor);
-        }
-        if(CommandScheduler.commands.Count > 0)
-        {
-            ActiveButton(redoButton,redoButtonColor);
-        }
-        else
-        {
-            DeactiveButton(redoButton,redoButtonColor);
+            DeactiveButton(redoButton, redoButtonColor);
         }
 
     }
-
+    public void ControlPlacementAlertActiveness(bool activeState)
+    {
+        placementAlert.SetActive(activeState);
+    }
+    public void ShowOnlyRotationButtons(bool activeness)
+    {
+        rotationLeftButton.SetActive(activeness);
+        rotationRightButton.SetActive(activeness);
+    }
     void ActiveButton(Button button, Color Color)
     {
         button.GetComponent<Image>().color = new Color(Color.a, Color.g, Color.b, 1f);
@@ -63,4 +76,6 @@ public class UIManager : Singleton<UIManager>
         button.GetComponent<Image>().color = new Color(Color.a, Color.g, Color.b, 0.3f);
         button.interactable = false;
     }
+
+   
 }

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Build : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] GameObject buildingObject;
+    [SerializeField] Parent parent;
     static Stack<GameObject> buildings = new Stack<GameObject>();
     static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
@@ -44,6 +45,7 @@ public class Build : MonoBehaviour, IPointerDownHandler
     {
         buildedObject = Instantiate(buildingObject);
         Building building = buildedObject.GetComponent<Building>();
+        parent.state = Parent.ParentState.Building;
         while (!buildFinished)
         {
             yield return new WaitForSeconds(0.01f);
@@ -62,6 +64,7 @@ public class Build : MonoBehaviour, IPointerDownHandler
                     CommandScheduler.RunBuildingCommand(this);
                     building.isBuilded = true;
                     SelectManager.instance.DeSelectUnit(building);
+                    parent.state = Parent.ParentState.Free;
                     break;
                 }
             }

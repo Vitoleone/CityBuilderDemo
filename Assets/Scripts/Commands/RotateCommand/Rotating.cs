@@ -12,14 +12,29 @@ public class Rotating : MonoBehaviour
     
     public void RotateBuilding()
     {
-        undoRotatations.Push(transform.rotation.eulerAngles);
+        GetComponent<Parent>().state = Parent.ParentState.Rotating;
        
+        GetComponent<Parent>().ControlChildPlacement();
+        if(!SelectManager.instance.AllCanBuild())
+        {
+            UIManager.instance.SetFunctionalButtonsActivness(false);
+            UIManager.instance.ShowOnlyRotationButtons(true);
+        }
+        else
+        {
+            UIManager.instance.SetFunctionalButtonsActivness(true);
+            GetComponent<Parent>().state = Parent.ParentState.Free;
+        }
+        undoRotatations.Push(transform.rotation.eulerAngles);
         transform.Rotate(new Vector3(0, rotateAmount, 0));
+        
+        
     }
     public void Undo()
     {
         if(undoRotatations.Count > 0)
         {
+            GetComponent<Parent>().ControlChildPlacement();
             undoRotatations.Pop();
             transform.Rotate(new Vector3(0, -rotateAmount, 0));
             redoRotatations.Push(transform.rotation.eulerAngles);
@@ -29,6 +44,7 @@ public class Rotating : MonoBehaviour
     {
         if (redoRotatations.Count > 0)
         {
+            GetComponent<Parent>().ControlChildPlacement();
             redoRotatations.Pop();
             transform.Rotate(new Vector3(0, rotateAmount, 0));
             undoRotatations.Push(transform.rotation.eulerAngles);
