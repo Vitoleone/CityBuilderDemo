@@ -32,7 +32,6 @@ public class Building : MonoBehaviour
     }
     public void CheckCanBuild()
     {
-        
         RaycastHit hitInfo;
         placementCircle.gameObject.SetActive(true);
         selectedCircle.gameObject.SetActive(false);

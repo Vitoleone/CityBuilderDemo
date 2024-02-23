@@ -122,7 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCircle: {fileID: 2909509613373102880}
   placementCircle: {fileID: 599850130169876741}
-  isSelected: 0
   isBuilded: 0
   canBuild: 0
 --- !u!1001 &2022849118346868882
@@ -243,7 +242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9211984937852169478, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 9211984937852169478, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -380,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9211984937852169478, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 9211984937852169478, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

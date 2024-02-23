@@ -10,12 +10,17 @@ public class Build : MonoBehaviour, IPointerDownHandler
     static Stack<GameObject> buildings = new Stack<GameObject>();
     static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
-    bool buildFinished = false;
+    public bool buildFinished = false;
     int layerNumber = 6;
     int layerMask;
     private void Start()
     {
         layerMask = 1 << layerNumber;
+        
+    }
+    private void OnDestroy()
+    {
+        EventManager.instance.OnBuildEnded -= BuildEnd;
     }
 
     public void BuildExecute()
@@ -43,13 +48,16 @@ public class Build : MonoBehaviour, IPointerDownHandler
 
     IEnumerator Building()
     {
-        buildedObject = Instantiate(buildingObject);
+        if(buildedObject == null)
+        {
+            buildedObject = Instantiate(buildingObject);
+        }
+        EventManager.instance.OnBuildEnded += BuildEnd;
         Building building = buildedObject.GetComponent<Building>();
         parent.state = Parent.ParentState.Building;
         while (!buildFinished)
         {
             yield return new WaitForSeconds(0.01f);
-            //building.CheckCanBuild();
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
@@ -65,11 +73,26 @@ public class Build : MonoBehaviour, IPointerDownHandler
                     building.isBuilded = true;
                     SelectManager.instance.DeSelectUnit(building);
                     parent.state = Parent.ParentState.Free;
+                    EventManager.instance.OnBuildEnded -= BuildEnd;
+                    buildedObject = null;
                     break;
                 }
+                else if(Input.GetMouseButtonDown(0) && !building.canBuild)
+                {
+                    UIManager.instance.SetFunctionalButtonsActivness(false);
+                    UIManager.instance.ControlPlacementAlertActiveness(true);
+                    buildFinished = true;
+                }
+                
             }
             
         }
+    }
+    void BuildEnd()
+    {
+        buildFinished = false;
+        EventManager.instance.OnBuildEnded -= BuildEnd;
+        StartCoroutine(Building());
     }
     
 }

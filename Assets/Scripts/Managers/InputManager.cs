@@ -57,11 +57,11 @@ public class InputManager : MonoBehaviour
     {
         Moving parentMoving = parentObject.GetComponent<Moving>();
         Scale parentScale = parentObject.GetComponent<Scale>();
-        Build parentBuild = parentObject.GetComponent<Build>();
         Rotating parentRotate = parentObject.GetComponent<Rotating>();
         switch(parent.state)
         {
             case Parent.ParentState.Building:
+                EventManager.instance.OnBuildEnded?.Invoke();
                 break;
             case Parent.ParentState.Scaling:
                 break;

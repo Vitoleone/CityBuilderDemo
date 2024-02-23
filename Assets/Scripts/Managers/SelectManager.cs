@@ -45,6 +45,8 @@ public class SelectManager : Singleton<SelectManager>
         {
             selectedUnits.Add(unit);
             unit.GetComponent<Building>().selectedCircle.SetActive(true);
+            UIManager.instance.SetFunctionalButtonsActivness(true);
+            UIManager.instance.buildings.SetActive(false);
         }
         if (!UIManager.instance.allFunctionalActiveness)
         {
@@ -79,6 +81,7 @@ public class SelectManager : Singleton<SelectManager>
         selectedUnits.Clear();
         UIManager.instance.checkButtonsActiveness?.Invoke();
         xOffset = -1;
+        UIManager.instance.buildings.SetActive(true);
     }
 
   
@@ -87,7 +90,11 @@ public class SelectManager : Singleton<SelectManager>
         foreach(Building building in selectedUnits)
         {
             if (!building.canBuild)
+            {
+                UIManager.instance.SetFunctionalButtonsActivness(false);
                 return false;
+            }
+                
         }
         return true;
     }

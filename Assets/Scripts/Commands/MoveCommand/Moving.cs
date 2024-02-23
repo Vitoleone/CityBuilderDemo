@@ -39,6 +39,7 @@ public class Moving : MonoBehaviour
                         movementFinished = true;
                         canMove = false;
                         parent.state = Parent.ParentState.Free;
+                        UIManager.instance.SetFunctionalButtonsActivness(true);
                         return transform.position;
                     }
                     else if(Input.GetMouseButtonDown(0) && !SelectManager.instance.AllCanBuild())

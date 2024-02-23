@@ -14,6 +14,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public Button undoButton;
     [SerializeField] public Button redoButton;
     [SerializeField] public GameObject placementAlert;
+    [SerializeField] public GameObject buildings;
     public bool allFunctionalActiveness = false;
     public Action checkButtonsActiveness;
     Color undoButtonColor, redoButtonColor;
@@ -61,10 +62,12 @@ public class UIManager : Singleton<UIManager>
     {
         placementAlert.SetActive(activeState);
     }
-    public void ShowOnlyRotationButtons(bool activeness)
+    public void ShowOnlyRotationAndScaleButtons(bool activeness)
     {
         rotationLeftButton.SetActive(activeness);
         rotationRightButton.SetActive(activeness);
+        scaleDownButton.SetActive(activeness);
+        scaleUpButton.SetActive(activeness);
     }
     void ActiveButton(Button button, Color Color)
     {
