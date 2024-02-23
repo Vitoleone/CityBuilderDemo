@@ -16,38 +16,30 @@ public class Scale : MonoBehaviour
 
     public void ScaleBuilding()
     {
+        
         if (transform.localScale.y < 2.5f && scaleAmount > 0)
         {
-            parent.state = Parent.ParentState.Scaling;
-            transform.localScale += Vector3.one * scaleAmount;
-            undoList.Push(Vector3.one * scaleAmount);
-            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
-            CheckPlacable();
+            DoScaling();
         }
         else if((transform.localScale.y >= 2.5f || transform.localScale.y > .5) && scaleAmount < 0)
         {
-            parent.state = Parent.ParentState.Scaling;
-            transform.localScale += Vector3.one * scaleAmount;
-            undoList.Push(Vector3.one * scaleAmount);
-            transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
-            CheckPlacable();
+            DoScaling();
         }
 
     }
 
-    private void CheckPlacable()
+    private void DoScaling()
     {
-        parent.ControlChildPlacement();
-        if (SelectManager.instance.AllCanBuild())
+        if (parent.state == Parent.ParentState.Free)
         {
-            parent.state = Parent.ParentState.Free;
-            UIManager.instance.SetFunctionalButtonsActivness(true);
+            CommandScheduler.ResetStacks(); 
+            parent.state = Parent.ParentState.Scaling;
         }
-        else
-        {
-            UIManager.instance.SetFunctionalButtonsActivness(false);
-            UIManager.instance.ShowOnlyRotationAndScaleButtons(true);
-        }
+        
+        transform.localScale += Vector3.one * scaleAmount;
+        undoList.Push(Vector3.one * scaleAmount);
+        transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
+        parent.CheckPlacable();
     }
 
     public void Undo()
@@ -57,9 +49,9 @@ public class Scale : MonoBehaviour
             GetComponent<Parent>().state = Parent.ParentState.Scaling;
             Vector3 undoVector = undoList.Pop();
             transform.localScale -= undoVector;
-            redoList.Push(undoVector);
+            redoList.Push(-undoVector);
             transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
-            CheckPlacable();
+            parent.CheckPlacable();
         }
         
     }
@@ -69,10 +61,10 @@ public class Scale : MonoBehaviour
         {
             GetComponent<Parent>().state = Parent.ParentState.Scaling;
             Vector3 redoVector = redoList.Pop();
-            transform.localScale += redoVector;
+            transform.localScale -= redoVector;
             undoList.Push(redoVector);
             transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
-            CheckPlacable();
+            parent.CheckPlacable();
         }
 
     }

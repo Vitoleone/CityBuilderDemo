@@ -7,15 +7,25 @@ using UnityEngine.UIElements;
 public class Rotating : MonoBehaviour
 {
     public float rotateAmount;
+    Parent parent;
     public Stack<Vector3> undoRotatations = new Stack<Vector3>();
     public Stack<Vector3> redoRotatations = new Stack<Vector3>();
-    
+
+    private void Start()
+    {
+        parent = GetComponent<Parent>();
+    }
+
     public void RotateBuilding()
     {
+        if (parent.state == Parent.ParentState.Free)
+        {
+            CommandScheduler.ResetStacks();
+        }
         GetComponent<Parent>().state = Parent.ParentState.Rotating;
         undoRotatations.Push(transform.rotation.eulerAngles);
         transform.Rotate(new Vector3(0, rotateAmount, 0));
-        CheckPlacable();
+        parent.CheckPlacable();
         
     }
     public void Undo()
@@ -26,7 +36,7 @@ public class Rotating : MonoBehaviour
             undoRotatations.Pop();
             transform.Rotate(new Vector3(0, -rotateAmount, 0));
             redoRotatations.Push(transform.rotation.eulerAngles);
-            CheckPlacable();
+            parent.CheckPlacable();
         }
     }
     public void Redo()
@@ -37,21 +47,8 @@ public class Rotating : MonoBehaviour
             redoRotatations.Pop();
             transform.Rotate(new Vector3(0, rotateAmount, 0));
             undoRotatations.Push(transform.rotation.eulerAngles);
-            CheckPlacable();
+            parent.CheckPlacable();
         }
     }
-    void CheckPlacable()
-    {
-        GetComponent<Parent>().ControlChildPlacement();
-        if (!SelectManager.instance.AllCanBuild())
-        {
-            UIManager.instance.SetFunctionalButtonsActivness(false);
-            UIManager.instance.ShowOnlyRotationAndScaleButtons(true);
-        }
-        else
-        {
-            UIManager.instance.SetFunctionalButtonsActivness(true);
-            GetComponent<Parent>().state = Parent.ParentState.Free;
-        }
-    }
+    
 }

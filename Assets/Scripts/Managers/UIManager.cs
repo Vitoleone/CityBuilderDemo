@@ -41,17 +41,17 @@ public class UIManager : Singleton<UIManager>
         movementButton.SetActive(activeness);
         scaleUpButton.SetActive(activeness);
         scaleDownButton.SetActive(activeness);
-        allFunctionalActiveness |= activeness;
+        allFunctionalActiveness = activeness;
     }
     public void CheckActiveness()
     {
-        if (CommandScheduler.commands.Count > 0 && SelectManager.instance.selectedUnits.Count > 0)
+        if (CommandScheduler.commands.Count > 0)
         {
             ActiveButton(undoButton,undoButtonColor);
             ActiveButton(redoButton, redoButtonColor);
 
         }
-        else if(CommandScheduler.commands.Count <= 0 && SelectManager.instance.selectedUnits.Count < 0)
+        else
         {
            DeactiveButton(undoButton, undoButtonColor);
             DeactiveButton(redoButton, redoButtonColor);

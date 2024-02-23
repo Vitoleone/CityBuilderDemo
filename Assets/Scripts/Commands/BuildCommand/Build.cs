@@ -48,46 +48,64 @@ public class Build : MonoBehaviour, IPointerDownHandler
 
     IEnumerator Building()
     {
-        if(buildedObject == null)
+        Building building = StartBuilding();
+        while (!buildFinished)
+        {
+            yield return new WaitForSeconds(0.005f);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
+                {
+                    
+                    buildedObject.transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
+                    if (Input.GetMouseButtonDown(0) && building.canBuild)
+                    {
+                        DoBuild(building);
+                        break;
+                    }
+                    else if (Input.GetMouseButtonDown(0) && !building.canBuild)
+                    {
+                        CantBuild();
+                    }
+                }
+            }
+             
+        }
+    }
+
+    private Building StartBuilding()
+    {
+        if (buildedObject == null)
         {
             buildedObject = Instantiate(buildingObject);
         }
         EventManager.instance.OnBuildEnded += BuildEnd;
         Building building = buildedObject.GetComponent<Building>();
         parent.state = Parent.ParentState.Building;
-        while (!buildFinished)
-        {
-            yield return new WaitForSeconds(0.01f);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(ray, out hitInfo,Mathf.Infinity,layerMask))
-            {
-                buildedObject.transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
-                if (Input.GetMouseButtonDown(0) && building.canBuild)
-                {
-                    buildFinished = true;
-                    
-                    building.placementCircle.gameObject.SetActive(false);
-                    CommandScheduler.RunBuildingCommand(this);
-                    building.isBuilded = true;
-                    SelectManager.instance.DeSelectUnit(building);
-                    parent.state = Parent.ParentState.Free;
-                    EventManager.instance.OnBuildEnded -= BuildEnd;
-                    buildedObject = null;
-                    break;
-                }
-                else if(Input.GetMouseButtonDown(0) && !building.canBuild)
-                {
-                    UIManager.instance.SetFunctionalButtonsActivness(false);
-                    UIManager.instance.ControlPlacementAlertActiveness(true);
-                    buildFinished = true;
-                }
-                
-            }
-            
-        }
+        return building;
     }
+
+    private void CantBuild()
+    {
+        UIManager.instance.SetFunctionalButtonsActivness(false);
+        UIManager.instance.ControlPlacementAlertActiveness(true);
+        buildFinished = true;
+    }
+
+    private void DoBuild(Building building)
+    {
+        buildFinished = true;
+        building.placementCircle.gameObject.SetActive(false);
+        CommandScheduler.RunBuildingCommand(this);
+        building.isBuilded = true;
+        SelectManager.instance.DeSelectUnit(building);
+        parent.state = Parent.ParentState.Free;
+        EventManager.instance.OnBuildEnded -= BuildEnd;
+        buildedObject = null;
+    }
+
     void BuildEnd()
     {
         buildFinished = false;

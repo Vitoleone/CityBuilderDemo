@@ -22,6 +22,10 @@ public class Moving : MonoBehaviour
     {
         if(canMove)
         {
+            if (parent.state == Parent.ParentState.Free)
+            {
+                CommandScheduler.ResetStacks();
+            }
             parent.state = Parent.ParentState.Moving;
             movementFinished = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,7 +38,7 @@ public class Moving : MonoBehaviour
                 {
                     transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
 
-                    if (Input.GetMouseButtonDown(0) && SelectManager.instance.AllCanBuild())
+                    if (Input.GetMouseButtonDown(0) && SelectManager.instance.CanAllBuild())
                     {
                         movementFinished = true;
                         canMove = false;
@@ -42,7 +46,7 @@ public class Moving : MonoBehaviour
                         UIManager.instance.SetFunctionalButtonsActivness(true);
                         return transform.position;
                     }
-                    else if(Input.GetMouseButtonDown(0) && !SelectManager.instance.AllCanBuild())
+                    else if(Input.GetMouseButtonDown(0) && !SelectManager.instance.CanAllBuild())
                     {
                         //hata ekraný popup olacak, canmove false olacak ve buttonlar görünmez hale gelecek.
                         canMove = false;

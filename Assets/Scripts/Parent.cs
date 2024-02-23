@@ -53,4 +53,18 @@ public class Parent : MonoBehaviour
             child.transform.SetParent(null);
         }
     }
+    public void CheckPlacable()
+    {
+        ControlChildPlacement();
+        if (!SelectManager.instance.CanAllBuild())
+        {
+            UIManager.instance.SetFunctionalButtonsActivness(false);
+            UIManager.instance.ShowOnlyRotationAndScaleButtons(true);
+        }
+        else
+        {
+            UIManager.instance.SetFunctionalButtonsActivness(true);
+            
+        }
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CommandScheduler : MonoBehaviour
 {
     public static Stack<ICommand> commands = new Stack<ICommand>();
+    int undoRedoCounter = 0; // if its 1 then undo
 
     public static void ResetStacks()
     {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2164338454197059387}
   - component: {fileID: 195655149683385006}
   - component: {fileID: -5393112596960545279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hospital
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4544823784808432362, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_IgnoreReversedGraphics
       value: 0
@@ -159,6 +163,10 @@ PrefabInstance:
     - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_Name
       value: PlacementCircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_IsActive
@@ -285,6 +293,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1027500796473623636}
     m_Modifications:
+    - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4544823784808432362, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_IgnoreReversedGraphics
       value: 0
@@ -296,6 +308,10 @@ PrefabInstance:
     - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_Name
       value: SelectedCircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4717471850550275564, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_IsActive

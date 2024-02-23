@@ -12,6 +12,7 @@ public class SelectManager : Singleton<SelectManager>
     public float xOffset = 0;
     public bool canMovementFinish;
     public Parent parent;
+
     private void Update()
     {
         
@@ -27,7 +28,7 @@ public class SelectManager : Singleton<SelectManager>
                     {
                         SelectUnit(building);
                     }
-                    else if(hitInfo.collider.gameObject.GetComponent<Terrain>() && parent.state == Parent.ParentState.Free)
+                    else if(hitInfo.collider.gameObject.GetComponent<Terrain>() && CanAllBuild())
                     {
                         DeselectAllUnits();
                         CommandScheduler.ResetStacks();
@@ -82,16 +83,16 @@ public class SelectManager : Singleton<SelectManager>
         UIManager.instance.checkButtonsActiveness?.Invoke();
         xOffset = -1;
         UIManager.instance.buildings.SetActive(true);
+        parent.state = Parent.ParentState.Free;
     }
 
   
-    public bool AllCanBuild()
+    public bool CanAllBuild()
     {
         foreach(Building building in selectedUnits)
         {
             if (!building.canBuild)
             {
-                UIManager.instance.SetFunctionalButtonsActivness(false);
                 return false;
             }
                 

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
+    //iki obje seçip birini kýrmýzý yapýp terraine bastýðýmda functional buttonslar yok oluyor.
     [SerializeField]public GameObject selectedCircle;
     [SerializeField]public Image placementCircle;
     public bool isBuilded;
