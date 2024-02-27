@@ -55,6 +55,7 @@ public class Parent : MonoBehaviour
     }
     public void CheckPlacable()
     {
+        Debug.Log("checked");
         ControlChildPlacement();
         if (!SelectManager.instance.CanAllBuild())
         {

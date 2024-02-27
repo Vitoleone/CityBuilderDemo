@@ -38,7 +38,7 @@ public class Scale : MonoBehaviour
         
         transform.localScale += Vector3.one * scaleAmount;
         undoList.Push(Vector3.one * scaleAmount);
-        transform.position = new Vector3(transform.position.x, transform.position.y + scaleAmount / 2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
         parent.CheckPlacable();
     }
 
@@ -50,7 +50,7 @@ public class Scale : MonoBehaviour
             Vector3 undoVector = undoList.Pop();
             transform.localScale -= undoVector;
             redoList.Push(-undoVector);
-            transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
             parent.CheckPlacable();
         }
         
@@ -63,7 +63,7 @@ public class Scale : MonoBehaviour
             Vector3 redoVector = redoList.Pop();
             transform.localScale -= redoVector;
             undoList.Push(redoVector);
-            transform.position = new Vector3(transform.position.x, transform.position.y - scaleAmount / 2, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
             parent.CheckPlacable();
         }
 

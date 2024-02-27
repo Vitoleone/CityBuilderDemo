@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public void UndoAllSelectedCommands()
     {
         CommandScheduler.UndoCommand();
+        
     }
     public void RedoAllSelectedCommands()
     {

@@ -22,10 +22,10 @@ public class Moving : MonoBehaviour
     {
         if(canMove)
         {
-            if (parent.state == Parent.ParentState.Free)
-            {
-                CommandScheduler.ResetStacks();
-            }
+            //if (parent.state == Parent.ParentState.Free)
+            //{
+            //    CommandScheduler.ResetStacks();
+            //}
             parent.state = Parent.ParentState.Moving;
             movementFinished = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -36,7 +36,7 @@ public class Moving : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
                 {
-                    transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
+                    transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
 
                     if (Input.GetMouseButtonDown(0) && SelectManager.instance.CanAllBuild())
                     {

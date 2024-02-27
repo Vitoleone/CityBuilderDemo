@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6524265241071788218}
   - component: {fileID: -8171448467202730896}
   - component: {fileID: 1798911667880698640}
+  - component: {fileID: 7181241625729784502}
   m_Layer: 7
   m_Name: Market
   m_TagString: Untagged
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCircle: {fileID: 4793335848465809688}
   placementCircle: {fileID: 2382220400567523054}
+  isOnBuilding: 0
   isBuilded: 0
   canBuild: 0
 --- !u!65 &1798911667880698640
@@ -119,11 +121,38 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 36.902557, y: 7.3745418, z: 20.288673}
   m_Center: {x: -4.224457, y: 3.6808603, z: 1.0810361}
+--- !u!54 &7181241625729784502
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722627683411591535}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &284441638280326388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,6 +161,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5386855424984931285}
     m_Modifications:
+    - target: {fileID: 1459590750256343447, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Color.a
+      value: 0.49019608
+      objectReference: {fileID: 0}
     - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_Layer
       value: 7

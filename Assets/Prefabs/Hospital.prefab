@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2164338454197059387}
   - component: {fileID: 195655149683385006}
   - component: {fileID: -5393112596960545279}
+  - component: {fileID: 7311043386888005114}
   m_Layer: 7
   m_Name: Hospital
   m_TagString: Untagged
@@ -103,11 +104,11 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 33.838707, y: 10.049179, z: 18.525175}
-  m_Center: {x: -2.7582207, y: 6.0430155, z: 2.6518276}
+  m_Size: {x: 37.07122, y: 15.6887, z: 20.713005}
+  m_Center: {x: -2.4542809, y: 8.862777, z: 2.5168626}
 --- !u!114 &-5393112596960545279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,8 +123,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCircle: {fileID: 2909509613373102880}
   placementCircle: {fileID: 599850130169876741}
+  isOnBuilding: 0
   isBuilded: 0
   canBuild: 0
+--- !u!54 &7311043386888005114
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363025940278517486}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &2022849118346868882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +322,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1027500796473623636}
     m_Modifications:
+    - target: {fileID: 1459590750256343447, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_Color.a
+      value: 0.49019608
+      objectReference: {fileID: 0}
     - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_Layer
       value: 7

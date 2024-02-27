@@ -59,7 +59,7 @@ public class Build : MonoBehaviour, IPointerDownHandler
                 if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
                 {
                     
-                    buildedObject.transform.position = new Vector3(hitInfo.point.x, transform.localScale.y / 2, hitInfo.point.z);
+                    buildedObject.transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
                     if (Input.GetMouseButtonDown(0) && building.canBuild)
                     {
                         DoBuild(building);

@@ -18,10 +18,10 @@ public class Rotating : MonoBehaviour
 
     public void RotateBuilding()
     {
-        if (parent.state == Parent.ParentState.Free)
-        {
-            CommandScheduler.ResetStacks();
-        }
+        //if (parent.state == Parent.ParentState.Free)
+        //{
+        //    CommandScheduler.ResetStacks();
+        //}
         GetComponent<Parent>().state = Parent.ParentState.Rotating;
         undoRotatations.Push(transform.rotation.eulerAngles);
         transform.Rotate(new Vector3(0, rotateAmount, 0));
