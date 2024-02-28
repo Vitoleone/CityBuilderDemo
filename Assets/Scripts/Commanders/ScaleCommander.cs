@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scale : MonoBehaviour
+public class ScaleCommander : MonoBehaviour
 {
     public float scaleAmount;
     Stack<Vector3> undoList = new Stack<Vector3>();

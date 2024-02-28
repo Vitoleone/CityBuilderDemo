@@ -12,22 +12,16 @@ using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
-    //iki obje seçip birini kýrmýzý yapýp terraine bastýðýmda functional buttonslar yok oluyor.
-    [SerializeField]public GameObject selectedCircle;
     [SerializeField]public Image placementCircle;
     public bool isOnBuilding = false;
     public bool isBuilded;
     public bool canBuild;
     bool boxHit;
     RaycastHit hitInfo;
-    int layerNumber = 6;
-    int layerMask;
     Renderer size;
-    
     private void Start()
     {
         size = GetComponent<Renderer>();
-        layerMask = 1 << layerNumber;
     }
     private void FixedUpdate()
     {
@@ -36,14 +30,30 @@ public class Building : MonoBehaviour
             CheckCanBuild();
         }
     }
+    public void OnBuildingSelect()
+    {
+        placementCircle.gameObject.SetActive(true);
+        UIManager.instance.SetFunctionalButtonsActivness(true);
+        UIManager.instance.buildings.SetActive(false);
+    }
+    public void OnBuildingDeselect()
+    {
+        placementCircle.gameObject.SetActive(false);
+        if(SelectManager.instance.selectedUnits.Count <= 0)
+        {
+            placementCircle.gameObject.SetActive(false);
+            UIManager.instance.SetFunctionalButtonsActivness(false);
+            UIManager.instance.buildings.SetActive(true);
+        }
+        
+    }
     public void CheckCanBuild()
     {
-        if(selectedCircle.active)
+        if(placementCircle.gameObject.activeInHierarchy)
         {
             placementCircle.gameObject.SetActive(true);
-            selectedCircle.gameObject.SetActive(false);
         }
-        boxHit = Physics.BoxCast(size.bounds.center+ Vector3.up * size.bounds.size.y*4, size.bounds.size*0.90f/2, -transform.up, out hitInfo,transform.localRotation,size.bounds.size.y*4,layerMask);
+        boxHit = Physics.BoxCast(size.bounds.center+ Vector3.up * size.bounds.size.y*4, size.bounds.size*0.90f/2, -transform.up, out hitInfo,transform.localRotation,size.bounds.size.y*4,LayerMask.GetMask("Ground"));
         if (!boxHit && isOnBuilding == false)
         {
             canBuild = true;
@@ -55,14 +65,7 @@ public class Building : MonoBehaviour
             placementCircle.color = Color.red + new Color(0,0,0,-.5f);
         }
     }
-    private void OnDestroy()
-    {
-        if (SelectManager.instance.selectedUnits.Contains(this))
-        {
-            SelectManager.instance.DeSelectUnit(this);
-            selectedCircle.SetActive(false);
-        }
-    }
+  
     private void OnCollisionStay(Collision collision)
     {
         if(collision.transform.TryGetComponent<Building>(out Building building))
@@ -70,12 +73,9 @@ public class Building : MonoBehaviour
             if(!isOnBuilding)
             {
                 isOnBuilding = true;
-                
                 building.isOnBuilding = true;
                 CheckCanBuild();
-
             }
-            
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -88,6 +88,24 @@ public class Building : MonoBehaviour
 
         }
     }
+    private void OnDestroy()
+    {
+        if (SelectManager.instance.selectedUnits.Contains(this))
+        {
+            SelectManager.instance.DeSelectUnit(this);
+            placementCircle.gameObject.SetActive(false);
+        }
+    }
+    private void OnDisable()
+    {
+
+        if (SelectManager.instance.selectedUnits.Contains(this))
+        {
+            SelectManager.instance.DeSelectUnit(this);
+            placementCircle.gameObject.SetActive(false);
+        }
+    }
+
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;
@@ -110,13 +128,5 @@ public class Building : MonoBehaviour
     //        Gizmos.DrawWireCube((size.bounds.center + Vector3.up * size.bounds.size.y*4) + (Vector3.down * size.bounds.size.y), size.bounds.size);
     //    }
     //}
-    private void OnDisable()
-    {
-        
-        if (SelectManager.instance.selectedUnits.Contains(this))
-        {
-            SelectManager.instance.DeSelectUnit(this);
-            selectedCircle.SetActive(false);
-        }
-    }
+
 }

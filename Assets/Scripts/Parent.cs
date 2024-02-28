@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Parent : MonoBehaviour
+public class Parent : Singleton<Parent>
 {
     public enum ParentState
     {
@@ -10,7 +10,8 @@ public class Parent : MonoBehaviour
         Building,
         Scaling,
         Rotating,
-        Moving
+        Moving,
+        Error
     }
     public ParentState state = ParentState.Free;
 
@@ -46,6 +47,10 @@ public class Parent : MonoBehaviour
             child.transform.SetParent(transform);
         }
     }
+    public void DetachChild(GameObject child)
+    {
+        child.transform.SetParent(null);
+    }
     public void ClearChilds()
     {
         foreach (Building child in SelectManager.instance.selectedUnits)
@@ -55,7 +60,6 @@ public class Parent : MonoBehaviour
     }
     public void CheckPlacable()
     {
-        Debug.Log("checked");
         ControlChildPlacement();
         if (!SelectManager.instance.CanAllBuild())
         {
@@ -65,7 +69,6 @@ public class Parent : MonoBehaviour
         else
         {
             UIManager.instance.SetFunctionalButtonsActivness(true);
-            
         }
     }
 }

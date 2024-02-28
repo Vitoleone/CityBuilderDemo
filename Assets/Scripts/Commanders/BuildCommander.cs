@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Build : MonoBehaviour, IPointerDownHandler
+public class BuildCommander
+    : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] GameObject buildingObject;
-    [SerializeField] Parent parent;
     static Stack<GameObject> buildings = new Stack<GameObject>();
     static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
     public bool buildFinished = false;
-    int layerNumber = 6;
-    int layerMask;
-    private void Start()
-    {
-        layerMask = 1 << layerNumber;
-        
-    }
+   
     private void OnDestroy()
     {
         EventManager.instance.OnBuildEnded -= BuildEnd;
@@ -51,14 +45,14 @@ public class Build : MonoBehaviour, IPointerDownHandler
         Building building = StartBuilding();
         while (!buildFinished)
         {
+            
             yield return new WaitForSeconds(0.005f);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
-                    
                     buildedObject.transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
                     if (Input.GetMouseButtonDown(0) && building.canBuild)
                     {
@@ -77,38 +71,41 @@ public class Build : MonoBehaviour, IPointerDownHandler
 
     private Building StartBuilding()
     {
-        if (buildedObject == null)
+        if(buildedObject == null)
         {
             buildedObject = Instantiate(buildingObject);
         }
+        
         EventManager.instance.OnBuildEnded += BuildEnd;
         Building building = buildedObject.GetComponent<Building>();
-        parent.state = Parent.ParentState.Building;
+        Parent.instance.state = Parent.ParentState.Building;
         return building;
     }
 
     private void CantBuild()
     {
         UIManager.instance.SetFunctionalButtonsActivness(false);
+        UIManager.instance.buildings.SetActive(false);
         UIManager.instance.ControlPlacementAlertActiveness(true);
         buildFinished = true;
     }
 
     private void DoBuild(Building building)
     {
+        buildedObject = null;
         buildFinished = true;
         building.placementCircle.gameObject.SetActive(false);
         CommandScheduler.RunBuildingCommand(this);
         building.isBuilded = true;
         SelectManager.instance.DeSelectUnit(building);
-        parent.state = Parent.ParentState.Free;
+        Parent.instance.state = Parent.ParentState.Free;
         EventManager.instance.OnBuildEnded -= BuildEnd;
-        buildedObject = null;
     }
 
     void BuildEnd()
     {
         buildFinished = false;
+        UIManager.instance.buildings.SetActive(true);
         EventManager.instance.OnBuildEnded -= BuildEnd;
         StartCoroutine(Building());
     }

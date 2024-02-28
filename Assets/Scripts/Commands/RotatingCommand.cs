@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RotatingCommand : ICommand
 {
-    Rotating _rotating;
-    public RotatingCommand(Rotating rotating)
+    RotatingCommander _rotating;
+    public RotatingCommand(RotatingCommander rotating)
     {
         _rotating = rotating;
     }

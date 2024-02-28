@@ -4,15 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
-{
-    [SerializeField] GameObject parentObject;
-    Parent parent;
-
-    public int availableObjects = 0;
-    private void Start()
-    {
-        parent = parentObject.GetComponent<Parent>();
-    }
+{  
     public void UndoAllSelectedCommands()
     {
         CommandScheduler.UndoCommand();
@@ -26,7 +18,7 @@ public class InputManager : MonoBehaviour
     {
 
         AssignParentAndMidpoint();
-        Moving parentMoving = parentObject.GetComponent<Moving>();
+        MovingCommander parentMoving = Parent.instance.GetComponent<MovingCommander>();
         parentMoving.canMove = canMove;
         CommandScheduler.RunMoveCommand(parentMoving);
     }
@@ -35,31 +27,31 @@ public class InputManager : MonoBehaviour
     {
 
         AssignParentAndMidpoint();
-        Rotating parentRotating = parentObject.GetComponent<Rotating>();
+        RotatingCommander parentRotating = Parent.instance.GetComponent<RotatingCommander>();
         parentRotating.rotateAmount = rotateAmount;
-        CommandScheduler.RunRotatingCommand(parentObject.GetComponent<Rotating>());
+        CommandScheduler.RunRotatingCommand(Parent.instance.GetComponent<RotatingCommander>());
     }
     public void ScaleSelectedBuildings(float scaleAmount)
     {
 
         AssignParentAndMidpoint();
-        Scale parentScaling = parentObject.GetComponent<Scale>();
+        ScaleCommander parentScaling = Parent.instance.GetComponent<ScaleCommander>();
         parentScaling.scaleAmount = scaleAmount;
-        CommandScheduler.RunScaleCommand(parentObject.GetComponent<Scale>());
+        CommandScheduler.RunScaleCommand(Parent.instance.GetComponent<ScaleCommander>());
     }
     private void AssignParentAndMidpoint()
     {
-        Vector3 midpoint = parent.GetMidpoint();
-        parentObject.transform.position = midpoint;
-        parent.ChildSelectedUnits();
+        Vector3 midpoint = Parent.instance.GetMidpoint();
+        Parent.instance.transform.position = midpoint;
+        Parent.instance.ChildSelectedUnits();
     }
 
     public void PlacementAlertButton()
     {
-        Moving parentMoving = parentObject.GetComponent<Moving>();
-        Scale parentScale = parentObject.GetComponent<Scale>();
-        Rotating parentRotate = parentObject.GetComponent<Rotating>();
-        switch(parent.state)
+        MovingCommander parentMoving = Parent.instance.GetComponent<MovingCommander>();
+        ScaleCommander parentScale = Parent.instance.GetComponent<ScaleCommander>();
+        RotatingCommander parentRotate = Parent.instance.GetComponent<RotatingCommander>();
+        switch(Parent.instance.state)
         {
             case Parent.ParentState.Building:
                 EventManager.instance.OnBuildEnded?.Invoke();
@@ -68,11 +60,12 @@ public class InputManager : MonoBehaviour
                 break;
             case Parent.ParentState.Moving:
                 parentMoving.canMove = true;
+                UIManager.instance.buildings.SetActive(true);
                 UIManager.instance.SetFunctionalButtonsActivness(true);
                 break;
             case Parent.ParentState.Rotating:
                 UIManager.instance.SetFunctionalButtonsActivness(true);
-                parent.state = Parent.ParentState.Rotating;
+                Parent.instance.state = Parent.ParentState.Rotating;
                 break;
             default:
                 break;

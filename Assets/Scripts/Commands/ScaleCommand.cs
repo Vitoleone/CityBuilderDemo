@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ScaleCommand : ICommand
 {
-    Scale _scale;
+    ScaleCommander _scale;
     public float scaleAmount;
-    public ScaleCommand(Scale scaling)
+    public ScaleCommand(ScaleCommander scaling)
     {
         _scale = scaling;
     }

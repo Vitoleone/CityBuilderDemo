@@ -4,7 +4,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Rotating : MonoBehaviour
+public class RotatingCommander : MonoBehaviour
 {
     public float rotateAmount;
     Parent parent;

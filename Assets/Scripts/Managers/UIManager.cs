@@ -20,8 +20,6 @@ public class UIManager : Singleton<UIManager>
     Color undoButtonColor, redoButtonColor;
     private void Start()
     {
-        //Events
-        SelectManager.instance.onSelectUnit += SetFunctionalButtonsActivness;
         checkButtonsActiveness += CheckActiveness;
 
         undoButtonColor = undoButton.GetComponent<Image>().color;
@@ -30,7 +28,6 @@ public class UIManager : Singleton<UIManager>
     }
     private void OnDestroy()
     {
-        SelectManager.instance.onSelectUnit -= SetFunctionalButtonsActivness;
         checkButtonsActiveness -= CheckActiveness;
     }
 

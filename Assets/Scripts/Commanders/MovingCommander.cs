@@ -6,35 +6,21 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Moving : MonoBehaviour
+public class MovingCommander : MonoBehaviour
 {
     public bool canMove, movementFinished = false;
-    public int layerNumber = 6;
-    public int layerMask;
-    Parent parent;
-
-    private void Start()
-    {
-        layerMask = 1 << layerNumber;
-        parent = GetComponent<Parent>();
-    }
     public Vector3 Move()
     {
         if(canMove)
         {
-            //if (parent.state == Parent.ParentState.Free)
-            //{
-            //    CommandScheduler.ResetStacks();
-            //}
-            parent.state = Parent.ParentState.Moving;
+            Parent.instance.state = Parent.ParentState.Moving;
             movementFinished = false;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
-            parent.ControlChildPlacement();
-            SelectManager.instance.canMovementFinish = false;
+            Parent.instance.ControlChildPlacement();
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, layerMask))
+                if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
                     transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
 
@@ -42,17 +28,15 @@ public class Moving : MonoBehaviour
                     {
                         movementFinished = true;
                         canMove = false;
-                        parent.state = Parent.ParentState.Free;
+                        Parent.instance.state = Parent.ParentState.Free;
                         UIManager.instance.SetFunctionalButtonsActivness(true);
                         return transform.position;
                     }
                     else if(Input.GetMouseButtonDown(0) && !SelectManager.instance.CanAllBuild())
                     {
-                        //hata ekraný popup olacak, canmove false olacak ve buttonlar görünmez hale gelecek.
                         canMove = false;
                         UIManager.instance.SetFunctionalButtonsActivness(false);
                         UIManager.instance.ControlPlacementAlertActiveness(true);
-                        
                     }
                 }
             }
@@ -61,7 +45,6 @@ public class Moving : MonoBehaviour
         else if(movementFinished)
         {
             canMove = false;
-            SelectManager.instance.canMovementFinish = true;
             return transform.position;
         }
         
@@ -69,6 +52,9 @@ public class Moving : MonoBehaviour
     }
     private void Update()
     {
-        Move();
+        if(canMove)
+        {
+            Move();
+        }
     }
 }

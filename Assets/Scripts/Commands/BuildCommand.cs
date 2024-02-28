@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BuildCommand : ICommand
 {
-    Build _building;
-    public BuildCommand(Build building)
+    BuildCommander _building;
+    public BuildCommand(BuildCommander building)
     {
         _building = building;
     }

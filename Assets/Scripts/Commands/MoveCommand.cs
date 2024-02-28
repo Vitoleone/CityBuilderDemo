@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MoveCommand : ICommand
 {
-    Moving _building;
+    MovingCommander _building;
     Vector3 startPosition;
     Vector3 endPosition;
-    public MoveCommand(Moving building) 
+    public MoveCommand(MovingCommander building) 
     {
         _building = building;
         startPosition = building.transform.position;

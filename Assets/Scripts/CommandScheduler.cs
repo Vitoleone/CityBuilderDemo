@@ -36,7 +36,7 @@ public class CommandScheduler : MonoBehaviour
         command.Redo();
         UIManager.instance.checkButtonsActiveness?.Invoke();
     }
-    public static void RunBuildingCommand(Build buildingToRun)
+    public static void RunBuildingCommand(BuildCommander buildingToRun)
     {
         if (buildingToRun == null)
         {
@@ -46,7 +46,7 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = new BuildCommand(buildingToRun);
         ExecuteCommand(command);
     }
-    public static void RunRotatingCommand(Rotating rotate)
+    public static void RunRotatingCommand(RotatingCommander rotate)
     {
         if (rotate == null)
         {
@@ -55,7 +55,7 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = new RotatingCommand(rotate);
         ExecuteCommand(command);
     }
-    public static void RunMoveCommand(Moving move)
+    public static void RunMoveCommand(MovingCommander move)
     {
         if (move == null)
         {
@@ -64,7 +64,7 @@ public class CommandScheduler : MonoBehaviour
         ICommand command = new MoveCommand(move);
         ExecuteCommand(command);
     }
-    public static void RunScaleCommand(Scale scale)
+    public static void RunScaleCommand(ScaleCommander scale)
     {
         if (scale == null)
         {
