@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5997786712448068039}
   - component: {fileID: 6333195423166056062}
   - component: {fileID: 8224892984280065861}
-  - component: {fileID: 1245795384355365247}
+  - component: {fileID: 4517604905729929376}
   m_Layer: 5
   m_Name: FireStationBuild
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1245795384355365247
+--- !u!114 &4517604905729929376
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +85,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7457469674807096295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce9f7f3a0987c54697fa2ee4cdfa472, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aae34ec97aebf24981427f3a2274096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingObject: {fileID: 3520681445263854137, guid: e478292f536a7134e8e48cb62cf2be07, type: 3}
+  buildFinished: 0

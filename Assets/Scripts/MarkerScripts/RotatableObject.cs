@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(SelectableObject))]
 public class RotatableObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public UnityEvent onRotateStart;
+    public UnityEvent onRotateEnd;
+    public void StartRotate()
     {
-        
+        onRotateStart.Invoke();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void EndRotate()
     {
-        
+        onRotateEnd.Invoke();
     }
 }

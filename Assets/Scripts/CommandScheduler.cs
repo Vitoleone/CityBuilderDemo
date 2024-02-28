@@ -22,18 +22,7 @@ public class CommandScheduler : MonoBehaviour
         if (commands.Count <= 0)
             return;
         ICommand command = commands.Pop();
-        commands.Push(command);
         command.Undo();
-        UIManager.instance.checkButtonsActiveness?.Invoke();
-    }
-
-    public static void RedoCommand()
-    {
-        if (commands.Count <= 0)
-            return;
-        ICommand command = commands.Pop();
-        commands.Push(command);
-        command.Redo();
         UIManager.instance.checkButtonsActiveness?.Invoke();
     }
     public static void RunBuildingCommand(BuildCommander buildingToRun)

@@ -14,11 +14,6 @@ public class RotatingCommand : ICommand
         _rotating.RotateBuilding();
     }
 
-    public void Redo()
-    {
-        _rotating.Redo();
-    }
-
     public void Undo()
     {
         _rotating.Undo();

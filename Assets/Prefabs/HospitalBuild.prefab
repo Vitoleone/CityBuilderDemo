@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9037584412140663261}
   - component: {fileID: 2474811888215288956}
   - component: {fileID: 8695446939273017018}
-  - component: {fileID: 6704786403212696961}
+  - component: {fileID: 9011682895009082914}
   m_Layer: 5
   m_Name: HospitalBuild
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6704786403212696961
+--- !u!114 &9011682895009082914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +85,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2650621711222595587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce9f7f3a0987c54697fa2ee4cdfa472, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aae34ec97aebf24981427f3a2274096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buildingObject: {fileID: 363025940278517486, guid: eb1a3f979ef5c8743a26ef5a30ec6511, type: 3}
+  buildFinished: 0

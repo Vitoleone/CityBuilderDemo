@@ -15,6 +15,10 @@ GameObject:
   - component: {fileID: -5393112596960545279}
   - component: {fileID: 2576556110879158707}
   - component: {fileID: 7311043386888005114}
+  - component: {fileID: -3643556166857861357}
+  - component: {fileID: -4402503028453417026}
+  - component: {fileID: -3451156310762030504}
+  - component: {fileID: -4723431885233499917}
   m_Layer: 7
   m_Name: Hospital
   m_TagString: Untagged
@@ -168,6 +172,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   building: {fileID: -5393112596960545279}
+  isSelected: 0
 --- !u!54 &7311043386888005114
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -195,6 +200,60 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-3643556166857861357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363025940278517486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebb1441a380e7e459f5ce57f4f30ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4402503028453417026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363025940278517486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3064f1e20f269c4c9b767d08fdf7932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMovementStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onMovementDone:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-3451156310762030504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363025940278517486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c4f2968bb71ae4bba48378fab114b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4723431885233499917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363025940278517486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebb1441a380e7e459f5ce57f4f30ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2022849118346868882
 PrefabInstance:
   m_ObjectHideFlags: 0

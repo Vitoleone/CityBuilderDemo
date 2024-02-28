@@ -37,6 +37,7 @@ public class MovingCommander : MonoBehaviour
                         canMove = false;
                         UIManager.instance.SetFunctionalButtonsActivness(false);
                         UIManager.instance.ControlPlacementAlertActiveness(true);
+                        UIManager.instance.DeactivateUndoButton();
                     }
                 }
             }
@@ -50,11 +51,9 @@ public class MovingCommander : MonoBehaviour
         
         return transform.position;
     }
+
     private void Update()
     {
-        if(canMove)
-        {
-            Move();
-        }
+        Move();
     }
 }

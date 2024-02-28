@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -283156751142372022}
   - component: {fileID: 1736448564389876060}
   - component: {fileID: 6779975673838439932}
+  - component: {fileID: 8860684661078310358}
+  - component: {fileID: 2637069718244960941}
   m_Layer: 7
   m_Name: School
   m_TagString: Untagged
@@ -147,6 +149,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   building: {fileID: 2700085822962608152}
+  isSelected: 0
 --- !u!65 &1736448564389876060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -195,6 +198,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8860684661078310358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295220564887911823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3064f1e20f269c4c9b767d08fdf7932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMovementStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onMovementDone:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2637069718244960941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295220564887911823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c4f2968bb71ae4bba48378fab114b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3161781111036679001
 PrefabInstance:
   m_ObjectHideFlags: 0

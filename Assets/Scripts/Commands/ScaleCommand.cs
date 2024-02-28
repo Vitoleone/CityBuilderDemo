@@ -14,12 +14,6 @@ public class ScaleCommand : ICommand
     {
         _scale.ScaleBuilding();
     }
-
-    public void Redo()
-    {
-        _scale.Redo();
-    }
-
     public void Undo()
     {
         _scale.Undo();

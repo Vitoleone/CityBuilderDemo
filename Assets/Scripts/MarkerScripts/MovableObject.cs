@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(SelectableObject))]
 public class MovableObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public UnityEvent onMovementStart;
+    public UnityEvent onMovementDone;
+    public void StartMovement()
     {
-        
+        onMovementStart.Invoke();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void StopMovement()
+    {   
+        onMovementDone.Invoke();
     }
 }

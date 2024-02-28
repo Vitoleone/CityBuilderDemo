@@ -10,10 +10,6 @@ public class InputManager : MonoBehaviour
         CommandScheduler.UndoCommand();
         
     }
-    public void RedoAllSelectedCommands()
-    {
-        CommandScheduler.RedoCommand();
-    }
     public void MoveAllSelectedBuildings(bool canMove)
     {
 
@@ -60,7 +56,6 @@ public class InputManager : MonoBehaviour
                 break;
             case Parent.ParentState.Moving:
                 parentMoving.canMove = true;
-                UIManager.instance.buildings.SetActive(true);
                 UIManager.instance.SetFunctionalButtonsActivness(true);
                 break;
             case Parent.ParentState.Rotating:
@@ -68,6 +63,7 @@ public class InputManager : MonoBehaviour
                 Parent.instance.state = Parent.ParentState.Rotating;
                 break;
             default:
+                Parent.instance.state = Parent.ParentState.Free;
                 break;
         }
         UIManager.instance.ControlPlacementAlertActiveness(false);

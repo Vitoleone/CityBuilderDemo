@@ -8,7 +8,6 @@ public class BuildCommander
 {
     [SerializeField] GameObject buildingObject;
     static Stack<GameObject> buildings = new Stack<GameObject>();
-    static Stack<GameObject> undoBuildings = new Stack<GameObject>();
     GameObject buildedObject;
     public bool buildFinished = false;
    
@@ -25,14 +24,7 @@ public class BuildCommander
     public void Undo()
     {
         GameObject undoBuilding = buildings.Pop();
-        undoBuildings.Push(undoBuilding);
         undoBuilding.SetActive(false);
-    }
-    public void Redo()
-    {
-        GameObject undoBuilding = undoBuildings.Pop();
-        buildings.Push(undoBuilding);
-        undoBuilding.SetActive(true);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -49,7 +41,7 @@ public class BuildCommander
             yield return new WaitForSeconds(0.005f);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (!EventSystem.current.IsPointerOverGameObject() && Parent.instance.state != Parent.ParentState.Error)
             {
                 if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
@@ -88,6 +80,7 @@ public class BuildCommander
         UIManager.instance.buildings.SetActive(false);
         UIManager.instance.ControlPlacementAlertActiveness(true);
         buildFinished = true;
+        StopCoroutine(Building());
     }
 
     private void DoBuild(Building building)

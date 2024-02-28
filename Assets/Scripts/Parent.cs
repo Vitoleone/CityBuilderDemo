@@ -40,6 +40,10 @@ public class Parent : Singleton<Parent>
         }
         return midpoint;
     }
+    public void ChildUnit(GameObject building)
+    {
+        building.transform.SetParent(transform);
+    }
     public void ChildSelectedUnits()
     {
         foreach (Building child in SelectManager.instance.selectedUnits)
@@ -61,14 +65,5 @@ public class Parent : Singleton<Parent>
     public void CheckPlacable()
     {
         ControlChildPlacement();
-        if (!SelectManager.instance.CanAllBuild())
-        {
-            UIManager.instance.SetFunctionalButtonsActivness(false);
-            UIManager.instance.ShowOnlyRotationAndScaleButtons(true);
-        }
-        else
-        {
-            UIManager.instance.SetFunctionalButtonsActivness(true);
-        }
     }
 }

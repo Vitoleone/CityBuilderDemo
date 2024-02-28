@@ -9,7 +9,6 @@ public class RotatingCommander : MonoBehaviour
     public float rotateAmount;
     Parent parent;
     public Stack<Vector3> undoRotatations = new Stack<Vector3>();
-    public Stack<Vector3> redoRotatations = new Stack<Vector3>();
 
     private void Start()
     {
@@ -18,15 +17,23 @@ public class RotatingCommander : MonoBehaviour
 
     public void RotateBuilding()
     {
-        //if (parent.state == Parent.ParentState.Free)
-        //{
-        //    CommandScheduler.ResetStacks();
-        //}
         GetComponent<Parent>().state = Parent.ParentState.Rotating;
         undoRotatations.Push(transform.rotation.eulerAngles);
         transform.Rotate(new Vector3(0, rotateAmount, 0));
         parent.CheckPlacable();
-        
+    }
+    public bool CheckRotatableButton()
+    {
+        bool shouldActive = true;
+        foreach (Building building in SelectManager.instance.selectedUnits)
+        {
+            if (building.GetComponent<RotatableObject>() == null)
+            {
+                shouldActive = false;
+                return shouldActive;
+            }
+        }
+        return shouldActive;
     }
     public void Undo()
     {
@@ -35,18 +42,6 @@ public class RotatingCommander : MonoBehaviour
             GetComponent<Parent>().state = Parent.ParentState.Rotating;
             undoRotatations.Pop();
             transform.Rotate(new Vector3(0, -rotateAmount, 0));
-            redoRotatations.Push(transform.rotation.eulerAngles);
-            parent.CheckPlacable();
-        }
-    }
-    public void Redo()
-    {
-        if (redoRotatations.Count > 0)
-        {
-            GetComponent<Parent>().state = Parent.ParentState.Rotating;
-            redoRotatations.Pop();
-            transform.Rotate(new Vector3(0, rotateAmount, 0));
-            undoRotatations.Push(transform.rotation.eulerAngles);
             parent.CheckPlacable();
         }
     }

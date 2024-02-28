@@ -18,10 +18,7 @@ public class BuildCommand : ICommand
     {
         _building.Undo();
     }
-    public void Redo()
-    {
-        _building.Redo();
-    }
+   
 
    
 }

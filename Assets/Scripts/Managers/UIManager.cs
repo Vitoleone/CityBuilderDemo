@@ -12,7 +12,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public GameObject scaleUpButton;
     [SerializeField] public GameObject scaleDownButton;
     [SerializeField] public Button undoButton;
-    [SerializeField] public Button redoButton;
     [SerializeField] public GameObject placementAlert;
     [SerializeField] public GameObject buildings;
     public bool allFunctionalActiveness = false;
@@ -23,7 +22,6 @@ public class UIManager : Singleton<UIManager>
         checkButtonsActiveness += CheckActiveness;
 
         undoButtonColor = undoButton.GetComponent<Image>().color;
-        redoButtonColor = redoButton.GetComponent<Image>().color;
         CheckActiveness();
     }
     private void OnDestroy()
@@ -45,15 +43,16 @@ public class UIManager : Singleton<UIManager>
         if (CommandScheduler.commands.Count > 0)
         {
             ActiveButton(undoButton,undoButtonColor);
-            ActiveButton(redoButton, redoButtonColor);
 
         }
         else
         {
-           DeactiveButton(undoButton, undoButtonColor);
-            DeactiveButton(redoButton, redoButtonColor);
+           DeactivateUndoButton();
         }
-
+    }
+    public void DeactivateUndoButton()
+    {
+        DeactiveButton(undoButton, undoButtonColor);
     }
     public void ControlPlacementAlertActiveness(bool activeState)
     {

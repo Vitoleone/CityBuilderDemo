@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 8127008273253722201}
   - component: {fileID: 7522062182096715388}
   - component: {fileID: 2804042998338286189}
+  - component: {fileID: 8074851242251054625}
+  - component: {fileID: -4177092624795332405}
+  - component: {fileID: -3684975590787660363}
   m_Layer: 7
   m_Name: Fire_Station
   m_TagString: Untagged
@@ -168,6 +171,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   building: {fileID: 8127008273253722201}
+  isSelected: 0
 --- !u!54 &2804042998338286189
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -195,6 +199,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8074851242251054625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520681445263854137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3064f1e20f269c4c9b767d08fdf7932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onMovementStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onMovementDone:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-4177092624795332405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520681445263854137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c4f2968bb71ae4bba48378fab114b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3684975590787660363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520681445263854137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eebb1441a380e7e459f5ce57f4f30ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8713935071672022791
 PrefabInstance:
   m_ObjectHideFlags: 0
