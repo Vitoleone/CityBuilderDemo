@@ -40,7 +40,7 @@ public class SelectManager : Singleton<SelectManager>
                     ControlButtons();
                 }
                 //if ray hits terrain and all buildings can placed then deselect all buildings
-                else if (hitInfo.collider.gameObject.GetComponent<Terrain>() && Parent.instance.CanAllChildsPlaced())
+                else if (hitInfo.collider.gameObject.GetComponent<Terrain>() && Parent.instance.CheckAllChildsCanBePlaced())
                 {
                     DeselectAllBuildings();
                 }
@@ -84,7 +84,7 @@ public class SelectManager : Singleton<SelectManager>
         {
             unit.placementCircle.gameObject.SetActive(false);
         }
-        Parent.instance.ClearChilds();
+        Parent.instance.ClearAllChilds();
         selectedUnits.Clear();
         EventManager.instance.OnDeselect?.Invoke();
        

@@ -17,8 +17,7 @@ public class MovingCommander : MonoBehaviour
         if (canMove)
         Move();
     }
-
-    public Vector3 Move()
+    public void Move()
     {
         Parent.instance.state = ParentState.Moving;
         movementFinished = false;
@@ -27,27 +26,34 @@ public class MovingCommander : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
         {
             transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
-            canPlaceable = Parent.instance.CanAllChildsPlaced();
-            Parent.instance.ControlChildPlacement();
+            canPlaceable = Parent.instance.CheckAllChildsCanBePlaced();
+            Parent.instance.AssignPlacementValueOnAllChilds();
             if (Input.GetMouseButtonDown(0))
             {
                 if (canPlaceable)
                 {
-                    movementFinished = true;
-                    canMove = false;
-                    Parent.instance.state = ParentState.Free;
-                    UIManager.instance.SetFunctionalButtonsActivness(true);
-                    return transform.position;
+                    PlaceMovingObject();
                 }
                 else
                 {
                     canMove = false;
-                    UIManager.instance.SetFunctionalButtonsActivness(false);
-                    UIManager.instance.ControlPlacementAlertActiveness(true);
-                    UIManager.instance.DeactivateUndoButton();
+                    OnObjectCantPlacedPosition();
                 }
             }
         }
-        return transform.position;
+    }
+
+    void OnObjectCantPlacedPosition()
+    {
+        UIManager.instance.SetFunctionalButtonsActivness(false);
+        UIManager.instance.ControlPlacementAlertActiveness(true);
+        UIManager.instance.DeactivateUndoButton();
+    }
+    void PlaceMovingObject()
+    {
+        movementFinished = true;
+        canMove = false;
+        Parent.instance.state = ParentState.Free;
+        UIManager.instance.SetFunctionalButtonsActivness(true);
     }
 }

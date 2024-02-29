@@ -5,27 +5,26 @@ using UnityEngine;
 public class MoveCommand : ICommand
 {
     MovingCommander _building;
-    Vector3 startPosition;
-    Vector3 endPosition;
+    List<Vector3> prevPosition = new List<Vector3>();
     public MoveCommand(MovingCommander building) 
     {
         _building = building;
-        startPosition = building.transform.position;
     }
     public void Execute()
     {
-        endPosition = _building.Move();
-    }
-
-    public void Redo()
-    {
-        _building.transform.position = endPosition;
+        prevPosition.Add(_building.transform.position);
+        _building.Move();
     }
 
     public void Undo()
     {
-        endPosition = _building.transform.position;
-        _building.transform.position = startPosition;
+        if(prevPosition.Count > 0)
+        {
+            Parent.instance.state = ParentState.Moving;
+            _building.transform.position = prevPosition[prevPosition.Count - 1];
+            prevPosition.RemoveAt(prevPosition.Count - 1);
+            Parent.instance.AssignPlacementValueOnAllChilds();
+        }
     }
 
     

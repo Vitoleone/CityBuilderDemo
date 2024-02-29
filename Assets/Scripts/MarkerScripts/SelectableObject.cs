@@ -27,12 +27,12 @@ public class SelectableObject : MonoBehaviour
             OnSelected?.Invoke();
         }
     }
-    public void Deselect()
-    {
-        SelectManager.instance.selectedUnits.Remove(building);
-        isSelected = false;
-        Parent.instance.DetachChild(gameObject);
-        OnDeselect?.Invoke();
-    }
+    //public void Deselect()
+    //{
+    //    SelectManager.instance.selectedUnits.Remove(building);
+    //    isSelected = false;
+    //    Parent.instance.DetachChild(gameObject);
+    //    OnDeselect?.Invoke();
+    //}
 
 }

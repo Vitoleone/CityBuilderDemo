@@ -14,13 +14,32 @@ public class Parent : Singleton<Parent>
 {
     public ParentState state = ParentState.Free;
 
-    public void ControlChildPlacement()
+    public void AssignAndCheckChildPlacementValues()
+    {
+        AssignPlacementValueOnAllChilds();
+        CheckAllChildsCanBePlaced();
+    }
+    public void AssignPlacementValueOnAllChilds()
     {
         foreach (Building childBuilding in GetComponentsInChildren<Building>())
         {
             childBuilding.placementCircle.gameObject.SetActive(true);
             childBuilding.CheckCanBuild();
         }
+    }
+    public bool CheckAllChildsCanBePlaced()
+    {
+        foreach (Building building in SelectManager.instance.selectedUnits)
+        {
+            if (!building.canBuild)
+            {
+                return false;
+            }
+
+        }
+        //If all children can be placed then change parent state to free for click
+        Parent.instance.state = ParentState.Free;
+        return true;
     }
     public Vector3 GetMidpoint()
     {
@@ -50,27 +69,12 @@ public class Parent : Singleton<Parent>
     {
         child.transform.SetParent(null);
     }
-    public void ClearChilds()
+    public void ClearAllChilds()
     {
         foreach (Building child in SelectManager.instance.selectedUnits)
         {
             child.transform.SetParent(null);
         }
     }
-    public void CheckPlacable()
-    {
-        ControlChildPlacement();
-    }
-    public bool CanAllChildsPlaced()
-    {
-        foreach (Building building in SelectManager.instance.selectedUnits)
-        {
-            if (!building.canBuild)
-            {
-                return false;
-            }
-
-        }
-        return true;
-    }
+ 
 }

@@ -20,25 +20,12 @@ public class ScaleCommander : MonoBehaviour
     }
 
     private void DoScaling()
-    { 
+    {
         Parent.instance.state = ParentState.Scaling;
         transform.localScale += Vector3.one * scaleAmount;
         undoList.Push(Vector3.one * scaleAmount);
         transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
-        Parent.instance.CheckPlacable();
-    }
-
-    public void Undo()
-    {
-        if(undoList.Count > 0)
-        {
-            Parent.instance.state = ParentState.Scaling;
-            Vector3 undoVector = undoList.Pop();
-            transform.localScale -= undoVector;
-            transform.position = new Vector3(transform.position.x, 0.05f, transform.position.z);
-            Parent.instance.CheckPlacable();
-        }
-        
+        Parent.instance.AssignPlacementValueOnAllChilds();   
     }
        
 }
