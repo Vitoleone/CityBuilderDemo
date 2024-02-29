@@ -6,31 +6,32 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("Functional Buttons")]
     [SerializeField] public GameObject rotationLeftButton;
     [SerializeField] public GameObject rotationRightButton;
     [SerializeField] public GameObject movementButton;
     [SerializeField] public GameObject scaleUpButton;
     [SerializeField] public GameObject scaleDownButton;
     [SerializeField] public Button undoButton;
+
+    [Header("Other UIs")]
     [SerializeField] public GameObject placementAlert;
     [SerializeField] public GameObject buildings;
+
     public bool allFunctionalActiveness = false;
     public Action checkButtonsActiveness;
-    Color undoButtonColor, redoButtonColor;
+    Color undoButtonColor;
     private void Start()
     {
         checkButtonsActiveness += CheckActiveness;
-
         undoButtonColor = undoButton.GetComponent<Image>().color;
         CheckActiveness();
     }
-    private void OnDestroy()
-    {
-        checkButtonsActiveness -= CheckActiveness;
-    }
+
 
     public void SetFunctionalButtonsActivness(bool activeness)
     {
+        Debug.Log("Buttonlar: " + activeness);
         rotationLeftButton.SetActive(activeness);
         rotationRightButton.SetActive(activeness);
         movementButton.SetActive(activeness);
@@ -43,7 +44,6 @@ public class UIManager : Singleton<UIManager>
         if (CommandScheduler.commands.Count > 0)
         {
             ActiveButton(undoButton,undoButtonColor);
-
         }
         else
         {
@@ -52,7 +52,8 @@ public class UIManager : Singleton<UIManager>
     }
     public void DeactivateUndoButton()
     {
-        DeactiveButton(undoButton, undoButtonColor);
+        undoButton.GetComponent<Image>().color = new Color(undoButtonColor.a, undoButtonColor.g, undoButtonColor.b, 0.3f);
+        undoButton.interactable = false;
     }
     public void ControlPlacementAlertActiveness(bool activeState)
     {
@@ -70,11 +71,16 @@ public class UIManager : Singleton<UIManager>
         button.GetComponent<Image>().color = new Color(Color.a, Color.g, Color.b, 1f);
         button.interactable = true;
     }
-    void DeactiveButton(Button button, Color Color)
+    public void ActivateMarkersButtons(bool canScale, bool canRotate, bool canMove)
     {
-        button.GetComponent<Image>().color = new Color(Color.a, Color.g, Color.b, 0.3f);
-        button.interactable = false;
+        scaleDownButton.SetActive(canScale);
+        scaleUpButton.SetActive(canScale);
+        rotationLeftButton.SetActive(canRotate);
+        rotationRightButton.SetActive(canRotate);
+        movementButton.SetActive(canMove);
     }
-
-   
+    private void OnDestroy()
+    {
+        checkButtonsActiveness -= CheckActiveness;
+    }
 }

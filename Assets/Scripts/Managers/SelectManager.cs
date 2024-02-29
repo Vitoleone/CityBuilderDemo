@@ -8,42 +8,52 @@ public class SelectManager : Singleton<SelectManager>
 {
     public List<Building> selectedUnits;
     bool canScale= true,canMove = true,canRotate = true;
-  
+
+    private void Start()
+    {
+        EventManager.instance.OnDeselect += OnDeselect;
+    }
+    private void OnDestroy()
+    {
+        EventManager.instance.OnDeselect -= OnDeselect;
+    }
 
     private void Update()
     {
-        
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
         if (Input.GetMouseButtonDown(0))
         {
-            if (!EventSystem.current.IsPointerOverGameObject() && Parent.instance.state == Parent.ParentState.Free)//Casts ray if mouse is not on a UI element
+            Selection();
+        }
+    }
+    void Selection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (!EventSystem.current.IsPointerOverGameObject() && Parent.instance.state == ParentState.Free)//Casts ray if mouse is not on a UI element
+        {
+            if (Physics.Raycast(ray, out hitInfo))
             {
-                if (Physics.Raycast(ray, out hitInfo))
+                //Select selectable object
+                if (hitInfo.collider.gameObject.TryGetComponent<SelectableObject>(out SelectableObject selectedObject))
                 {
-                    if(hitInfo.collider.gameObject.TryGetComponent<SelectableObject>(out SelectableObject selectedObject))
-                    {
-                        selectedObject.Select();
-                        ControlButtons();
-                    }
-                    else if(hitInfo.collider.gameObject.GetComponent<Terrain>() && CanAllBuild())
-                    {
-                        DeselectAllUnits();
-                        CommandScheduler.ResetStacks();
-                        UIManager.instance.SetFunctionalButtonsActivness(false);
-                        Parent.instance.state = Parent.ParentState.Free;
-                    }
-
+                    selectedObject.Select();
+                    ControlButtons();
+                }
+                //if ray hits terrain and all buildings can placed then deselect all buildings
+                else if (hitInfo.collider.gameObject.GetComponent<Terrain>() && Parent.instance.CanAllChildsPlaced())
+                {
+                    DeselectAllBuildings();
                 }
             }
         }
     }
+    //Checks selected objects markers
     public void ControlButtons()
     {
         canMove = true; canRotate = true; canScale = true;
         foreach (Building building in selectedUnits)
         {
-            if(!building.TryGetComponent(out MovableObject movable))
+            if (!building.TryGetComponent(out MovableObject movable))
             {
                 canMove = false;
             }
@@ -56,15 +66,10 @@ public class SelectManager : Singleton<SelectManager>
                 canRotate = false;
             }
         }
-        UIManager.instance.scaleDownButton.SetActive(canScale);
-        UIManager.instance.scaleUpButton.SetActive(canScale);
-        UIManager.instance.rotationLeftButton.SetActive(canRotate);
-        UIManager.instance.rotationRightButton.SetActive(canRotate);
-        UIManager.instance.movementButton.SetActive(canMove);
+        UIManager.instance.ActivateMarkersButtons(canScale,canRotate,canMove);
     }
-   
 
-    public void DeSelectUnit(Building unit)
+    public void DeselectBuilding(Building unit)
     {
         if (unit != null)
         {
@@ -73,7 +78,7 @@ public class SelectManager : Singleton<SelectManager>
         }
         CommandScheduler.ResetStacks();
     }
-    public void DeselectAllUnits()
+    public void DeselectAllBuildings()
     {
         foreach (Building unit in selectedUnits)
         {
@@ -81,24 +86,15 @@ public class SelectManager : Singleton<SelectManager>
         }
         Parent.instance.ClearChilds();
         selectedUnits.Clear();
+        EventManager.instance.OnDeselect?.Invoke();
+       
+    }
+    private void OnDeselect()
+    {
         UIManager.instance.checkButtonsActiveness?.Invoke();
         UIManager.instance.buildings.SetActive(true);
-        Parent.instance.state = Parent.ParentState.Free;
+        Parent.instance.state = ParentState.Free;
+        CommandScheduler.ResetStacks();
+        UIManager.instance.SetFunctionalButtonsActivness(false);
     }
-
-  
-    public bool CanAllBuild()
-    {
-        foreach(Building building in selectedUnits)
-        {
-            if (!building.canBuild)
-            {
-                return false;
-            }
-                
-        }
-        return true;
-    }
-
-
 }

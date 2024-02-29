@@ -17,7 +17,7 @@ public class RotatingCommander : MonoBehaviour
 
     public void RotateBuilding()
     {
-        GetComponent<Parent>().state = Parent.ParentState.Rotating;
+        GetComponent<Parent>().state = ParentState.Rotating;
         undoRotatations.Push(transform.rotation.eulerAngles);
         transform.Rotate(new Vector3(0, rotateAmount, 0));
         parent.CheckPlacable();
@@ -39,7 +39,7 @@ public class RotatingCommander : MonoBehaviour
     {
         if(undoRotatations.Count > 0)
         {
-            GetComponent<Parent>().state = Parent.ParentState.Rotating;
+            GetComponent<Parent>().state = ParentState.Rotating;
             undoRotatations.Pop();
             transform.Rotate(new Vector3(0, -rotateAmount, 0));
             parent.CheckPlacable();

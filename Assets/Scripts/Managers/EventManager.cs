@@ -6,4 +6,5 @@ using UnityEngine;
 public class EventManager : Singleton<EventManager>
 {
     public Action OnBuildEnded;
+    public Action OnDeselect;
 }

@@ -41,17 +41,18 @@ public class BuildCommander
             yield return new WaitForSeconds(0.005f);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
-            if (!EventSystem.current.IsPointerOverGameObject() && Parent.instance.state != Parent.ParentState.Error)
+            if (!EventSystem.current.IsPointerOverGameObject() && Parent.instance.state != ParentState.Error)
             {
                 if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 {
                     buildedObject.transform.position = new Vector3(hitInfo.point.x, 0.05f, hitInfo.point.z);
-                    if (Input.GetMouseButtonDown(0) && building.canBuild)
+                    Parent.instance.state = ParentState.Building;
+                    if (Input.GetMouseButtonDown(0) && building.canBuild == true)
                     {
                         DoBuild(building);
                         break;
                     }
-                    else if (Input.GetMouseButtonDown(0) && !building.canBuild)
+                    else if (Input.GetMouseButtonDown(0) && building.canBuild == false)
                     {
                         CantBuild();
                     }
@@ -70,7 +71,6 @@ public class BuildCommander
         
         EventManager.instance.OnBuildEnded += BuildEnd;
         Building building = buildedObject.GetComponent<Building>();
-        Parent.instance.state = Parent.ParentState.Building;
         return building;
     }
 
@@ -90,8 +90,8 @@ public class BuildCommander
         building.placementCircle.gameObject.SetActive(false);
         CommandScheduler.RunBuildingCommand(this);
         building.isBuilded = true;
-        SelectManager.instance.DeSelectUnit(building);
-        Parent.instance.state = Parent.ParentState.Free;
+        SelectManager.instance.DeselectBuilding(building);
+        Parent.instance.state = ParentState.Free;
         EventManager.instance.OnBuildEnded -= BuildEnd;
     }
 

@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
         Vector3 midpoint = Parent.instance.GetMidpoint();
         Parent.instance.transform.position = midpoint;
         Parent.instance.ChildSelectedUnits();
+        
     }
 
     public void PlacementAlertButton()
@@ -49,21 +50,21 @@ public class InputManager : MonoBehaviour
         RotatingCommander parentRotate = Parent.instance.GetComponent<RotatingCommander>();
         switch(Parent.instance.state)
         {
-            case Parent.ParentState.Building:
+            case ParentState.Building:
                 EventManager.instance.OnBuildEnded?.Invoke();
                 break;
-            case Parent.ParentState.Scaling:
+            case ParentState.Scaling:
                 break;
-            case Parent.ParentState.Moving:
+            case ParentState.Moving:
                 parentMoving.canMove = true;
                 UIManager.instance.SetFunctionalButtonsActivness(true);
                 break;
-            case Parent.ParentState.Rotating:
+            case ParentState.Rotating:
                 UIManager.instance.SetFunctionalButtonsActivness(true);
-                Parent.instance.state = Parent.ParentState.Rotating;
+                Parent.instance.state = ParentState.Rotating;
                 break;
             default:
-                Parent.instance.state = Parent.ParentState.Free;
+                Parent.instance.state = ParentState.Free;
                 break;
         }
         UIManager.instance.ControlPlacementAlertActiveness(false);

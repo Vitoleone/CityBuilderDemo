@@ -92,7 +92,7 @@ public class Building : MonoBehaviour
     {
         if (SelectManager.instance.selectedUnits.Contains(this))
         {
-            SelectManager.instance.DeSelectUnit(this);
+            SelectManager.instance.DeselectBuilding(this);
             placementCircle.gameObject.SetActive(false);
         }
     }
@@ -101,7 +101,7 @@ public class Building : MonoBehaviour
 
         if (SelectManager.instance.selectedUnits.Contains(this))
         {
-            SelectManager.instance.DeSelectUnit(this);
+            SelectManager.instance.DeselectBuilding(this);
             placementCircle.gameObject.SetActive(false);
         }
     }
