@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 8762539598914357905}
   - component: {fileID: 5635428941072860468}
   - component: {fileID: 7625130226012025342}
-  - component: {fileID: 3360448792534018490}
   - component: {fileID: 7476873495488625885}
   - component: {fileID: 5804226702734432330}
   - component: {fileID: 8425085595617641636}
   - component: {fileID: -3770513017265992350}
   - component: {fileID: -2224754686709035391}
   - component: {fileID: -8605996330351218375}
+  - component: {fileID: -5573072651152902492}
   m_Layer: 7
   m_Name: Police_Station
   m_TagString: Untagged
@@ -91,27 +91,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3360448792534018490
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273424752105082923}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 14.793741, y: 8.6159, z: 8.308966}
-  m_Center: {x: -0.25708222, y: 4.3015394, z: 0.38599396}
 --- !u!114 &7476873495488625885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +208,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c4f2968bb71ae4bba48378fab114b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onRotateStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onRotateEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-8605996330351218375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +226,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebb1441a380e7e459f5ce57f4f30ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScaleStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onScaleEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!64 &-5573072651152902492
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273424752105082923}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -900046970076166922, guid: 861e24a43738d2a4f884869d84521790, type: 3}
 --- !u!1001 &7112184652415854830
 PrefabInstance:
   m_ObjectHideFlags: 0

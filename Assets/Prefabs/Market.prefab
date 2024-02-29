@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 6524265241071788218}
   - component: {fileID: -8171448467202730896}
   - component: {fileID: 2314614321711065575}
-  - component: {fileID: 1798911667880698640}
   - component: {fileID: 7181241625729784502}
   - component: {fileID: 5887027549554866708}
   - component: {fileID: -1142452428426610348}
   - component: {fileID: -1718523266933096857}
+  - component: {fileID: 1066438677900602010}
   m_Layer: 7
   m_Name: Market
   m_TagString: Untagged
@@ -151,27 +151,6 @@ MonoBehaviour:
         m_CallState: 2
   building: {fileID: -8171448467202730896}
   isSelected: 0
---- !u!65 &1798911667880698640
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4722627683411591535}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 36.902557, y: 7.3745418, z: 20.288673}
-  m_Center: {x: -4.224457, y: 3.6808603, z: 1.0810361}
 --- !u!54 &7181241625729784502
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -229,6 +208,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c4f2968bb71ae4bba48378fab114b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onRotateStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onRotateEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-1718523266933096857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +226,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebb1441a380e7e459f5ce57f4f30ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onScaleStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onScaleEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!64 &1066438677900602010
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722627683411591535}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2104153811603578874, guid: 426427d09eae15a489510a472a49d806, type: 3}
 --- !u!1001 &3841248157383901049
 PrefabInstance:
   m_ObjectHideFlags: 0
