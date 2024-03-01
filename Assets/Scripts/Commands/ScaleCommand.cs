@@ -26,6 +26,10 @@ public class ScaleCommand : ICommand
             _scale.transform.localScale -= undoVector;
             _scale.transform.position = new Vector3(_scale.transform.position.x, 0.05f, _scale.transform.position.z);
             Parent.instance.AssignPlacementValueOnAllChilds();
+            if (Parent.instance.CheckAllChildsCanBePlaced())
+            {
+                Parent.instance.state = ParentState.Free;
+            }
         }
     }
 }

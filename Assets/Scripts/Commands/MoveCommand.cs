@@ -24,6 +24,10 @@ public class MoveCommand : ICommand
             _building.transform.position = prevPosition[prevPosition.Count - 1];
             prevPosition.RemoveAt(prevPosition.Count - 1);
             Parent.instance.AssignPlacementValueOnAllChilds();
+            if (Parent.instance.CheckAllChildsCanBePlaced())
+            {
+                Parent.instance.state = ParentState.Free;
+            }
         }
     }
 
