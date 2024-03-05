@@ -35,6 +35,7 @@ public class BuildCommander
     IEnumerator Building()
     {
         Building building = StartBuilding();
+        building.placementCircle.gameObject.SetActive(true);
         while (!buildFinished)
         {
             

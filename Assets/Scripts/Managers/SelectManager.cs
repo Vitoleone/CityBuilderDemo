@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class SelectManager : Singleton<SelectManager>
 {
     public List<Building> selectedUnits;
+    public List<Building> allBuildings;
     bool canScale= true,canMove = true,canRotate = true;
 
     private void Start()

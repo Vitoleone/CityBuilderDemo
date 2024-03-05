@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementCircle: {fileID: 8570926577272144249}
+  type: 1
   isOnBuilding: 0
   isBuilded: 0
   canBuild: 0
@@ -281,6 +282,10 @@ PrefabInstance:
     - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119665740036150698, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4634358043082654254, guid: 8d4131e3ec1d303428c6dc82011a1816, type: 3}
       propertyPath: m_PresetInfoIsWorld

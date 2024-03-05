@@ -1,18 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.PackageManager;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
     [SerializeField]public Image placementCircle;
+    [SerializeField]public BuildingType type;
     public bool isOnBuilding = false;
     public bool isBuilded;
     public bool canBuild;
@@ -22,6 +14,7 @@ public class Building : MonoBehaviour
     private void Start()
     {
         size = GetComponent<Renderer>();
+        SelectManager.instance.allBuildings.Add(this);
     }
     private void FixedUpdate()
     {
